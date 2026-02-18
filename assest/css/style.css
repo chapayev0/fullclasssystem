@@ -1,0 +1,371 @@
+/* Global Variables */
+:root {
+    --primary: #000000;
+    --primary-hover: #333333;
+    --secondary: #F8F8FB;
+    --accent: #E5E5E8;
+    --dark: #1A1A1A;
+    --light: #FFFFFF;
+    --gray: #6B7280;
+    --gray-light: #F3F4F6;
+    --border: #E5E7EB;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--light);
+    color: var(--dark);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* Header Navigation */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    border-bottom: 1px solid var(--border);
+    animation: slideDown 0.5s ease;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.navbar-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1.2rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 50px;
+    width: auto;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+    align-items: center;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--dark);
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--primary);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn {
+    padding: 0.7rem 1.8rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-outline {
+    background: var(--light);
+    border: 1px solid var(--border);
+    color: var(--dark);
+}
+
+.btn-outline:hover {
+    background: var(--secondary);
+    border-color: var(--accent);
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: var(--light);
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* ICT with Dilhara Section */
+.dilhara-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    padding: 60px 20px;
+    background-color: var(--light);
+    position: relative;
+    overflow: hidden;
+}
+
+.dilhara-text {
+    text-align: left;
+    color: var(--dark);
+    line-height: 1;
+    position: relative;
+    z-index: 2;
+}
+
+.dilhara-text .small-text {
+    font-size: 12vw;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-bottom: -20px;
+    color: var(--gray);
+}
+
+.dilhara-text .large-text {
+    font-size: 28vw;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: var(--primary);
+}
+
+/* Floating particles effect */
+.particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #60A5FA;
+    border-radius: 50%;
+    animation: float 3s ease-in-out infinite;
+    opacity: 0.6;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0) translateX(0);
+    }
+
+    50% {
+        transform: translateY(-20px) translateX(10px);
+    }
+}
+
+.particle:nth-child(1) {
+    top: 15%;
+    right: 20%;
+    animation-delay: 0s;
+}
+
+.particle:nth-child(2) {
+    top: 25%;
+    right: 15%;
+    animation-delay: 0.5s;
+}
+
+.particle:nth-child(3) {
+    top: 35%;
+    right: 25%;
+    animation-delay: 1s;
+}
+
+.particle:nth-child(4) {
+    top: 20%;
+    right: 30%;
+    animation-delay: 1.5s;
+}
+
+.particle:nth-child(5) {
+    top: 30%;
+    right: 18%;
+    animation-delay: 2s;
+}
+
+.particle:nth-child(6) {
+    top: 40%;
+    left: 20%;
+    animation-delay: 0.3s;
+}
+
+.particle:nth-child(7) {
+    top: 25%;
+    left: 15%;
+    animation-delay: 0.8s;
+}
+
+.particle:nth-child(8) {
+    top: 35%;
+    left: 25%;
+    animation-delay: 1.3s;
+}
+
+/* Footer */
+.footer {
+    background: var(--secondary);
+    color: var(--dark);
+    padding: 4rem 2rem 2rem;
+    border-top: 1px solid var(--border);
+}
+
+.footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.footer-brand h3 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    font-family: 'Space Mono', monospace;
+    color: var(--primary);
+}
+
+.footer-brand p {
+    color: var(--gray);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-link {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--dark);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border);
+}
+
+.social-link:hover {
+    background: var(--primary);
+    color: var(--light);
+    transform: translateY(-3px);
+}
+
+.footer-section h4 {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    color: var(--dark);
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 0.8rem;
+}
+
+.footer-links a {
+    color: var(--gray);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--primary);
+    padding-left: 5px;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    color: var(--gray);
+}
+
+/* Responsive Design for Layouts */
+@media (max-width: 1024px) {
+    .nav-links {
+        gap: 1.5rem;
+    }
+
+    .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+
+    .dilhara-text .small-text {
+        font-size: 14vw;
+    }
+
+    .dilhara-text .large-text {
+        font-size: 30vw;
+    }
+}

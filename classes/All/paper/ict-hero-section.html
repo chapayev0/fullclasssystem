@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICT with Dilhara</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background-color: #ffffff;
+        }
+
+        .hero-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 60vh;
+            padding: 60px 20px;
+            background-color: #ffffff;
+        }
+
+        .hero-text {
+            text-align: left;
+            color: #1a1a1a;
+            line-height: 1;
+        }
+
+        .hero-text .small-text {
+            font-size: 12vw;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            margin-bottom: -20px;
+        }
+
+        .hero-text .large-text {
+            font-size: 28vw;
+            font-weight: 600;
+            letter-spacing: -0.03em;
+        }
+
+        /* Footer navigation */
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #f8f9fa;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #5f6368;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #5f6368;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #1a1a1a;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-text .small-text {
+                font-size: 14vw;
+            }
+
+            .hero-text .large-text {
+                font-size: 30vw;
+            }
+
+            .footer-nav {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero-section">
+        <div class="hero-text">
+            <div class="small-text">ICT with</div>
+            <div class="large-text">Dilhara</div>
+        </div>
+    </section>
+
+    <footer class="footer-nav">
+        <div class="logo">Google</div>
+        <nav class="nav-links">
+            <a href="#">About Google</a>
+            <a href="#">Google Products</a>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+        </nav>
+    </footer>
+</body>
+</html>

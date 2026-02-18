@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robotics Mastery Course | Build Tomorrow's Technology</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=IBM+Plex+Sans:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00d4ff;
+            --secondary: #ff006e;
+            --accent: #ffbe0b;
+            --dark: #0a0e27;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --success: #06ffa5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            color: var(--dark);
+            background: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background:
+                linear-gradient(135deg, #f8f9fa 0%, #e3f2fd 50%, #f1f8ff 100%);
+            overflow: hidden;
+        }
+
+        .bg-pattern::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background-image:
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 212, 255, 0.03) 2px, rgba(0, 212, 255, 0.03) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0, 212, 255, 0.03) 2px, rgba(0, 212, 255, 0.03) 4px);
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        /* Hero Header */
+        header {
+            position: relative;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            padding: 6rem 2rem 8rem;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+
+            50% {
+                transform: scale(1.2);
+                opacity: 0.5;
+            }
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(0, 212, 255, 0.2);
+            color: var(--primary);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border: 1px solid var(--primary);
+            margin-bottom: 1.5rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 900;
+            color: white;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 .highlight {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 700px;
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, #0099cc 100%);
+            color: var(--dark);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.5);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--dark);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.875rem;
+            color: var(--primary);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+            font-weight: 900;
+        }
+
+        .section-desc {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Course Description Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.15);
+            border-color: var(--primary);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(255, 0, 110, 0.1) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.4s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .feature-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        /* Gallery Section */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            height: 300px;
+            background: linear-gradient(135deg, #e3f2fd 0%, #f1f8ff 100%);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.8) 0%, rgba(255, 0, 110, 0.8) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 1;
+        }
+
+        .gallery-item:hover::before {
+            opacity: 0.9;
+        }
+
+        .gallery-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: var(--gray);
+        }
+
+        .gallery-placeholder svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+            z-index: 2;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.2);
+        }
+
+        /* Video Section */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .video-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .video-thumbnail {
+            position: relative;
+            height: 250px;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .video-thumbnail::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background:
+                repeating-linear-gradient(0deg, transparent, transparent 10px, rgba(0, 212, 255, 0.05) 10px, rgba(0, 212, 255, 0.05) 20px);
+        }
+
+        .play-button {
+            width: 70px;
+            height: 70px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+
+        .play-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.6);
+        }
+
+        .video-info {
+            padding: 1.5rem;
+        }
+
+        .video-info h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .video-info p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        /* Venue Section */
+        #venue {
+            background: white;
+            margin: 5rem 0;
+            border-radius: 24px;
+            padding: 5rem 2rem;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.08);
+        }
+
+        .venue-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .venue-box {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .venue-box::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            border-radius: 4px;
+        }
+
+        .venue-box h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .venue-box p {
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        .venue-box strong {
+            color: var(--dark);
+        }
+
+        /* Registration Form */
+        #register {
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            color: white;
+            margin: 5rem 0;
+            border-radius: 24px;
+            padding: 5rem 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #register::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%);
+            animation: pulse 6s ease-in-out infinite;
+        }
+
+        #register .section-label {
+            color: var(--primary);
+        }
+
+        #register h2 {
+            color: white;
+        }
+
+        #register .section-desc {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .form-wrapper {
+            max-width: 800px;
+            margin: 3rem auto 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'IBM Plex Sans', sans-serif;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .form-group select {
+            cursor: pointer;
+        }
+
+        .form-group select option {
+            background: var(--dark);
+            color: white;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.25rem;
+            background: linear-gradient(135deg, var(--primary) 0%, #0099cc 100%);
+            color: var(--dark);
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.5);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        footer p {
+            margin: 0.5rem 0;
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Scroll Animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+            }
+
+            header {
+                padding: 4rem 2rem 6rem;
+            }
+
+            .features-grid,
+            .gallery-grid,
+            .video-grid,
+            .venue-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Partners Carousel Styles */
+        .logo-slider {
+            overflow: hidden;
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .logo-track {
+            display: flex;
+            gap: 4rem;
+            animation: scroll 20s linear infinite;
+            width: max-content;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .institute-card {
+            min-width: 320px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            gap: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .institute-logo-box {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .institute-logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .institute-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--dark);
+            margin-bottom: 0.2rem;
+        }
+
+        .institute-location {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .back-link {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: transform 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-pattern"></div>
+
+    <!-- Hero Header -->
+    <header>
+        <a href="../index.php" class="back-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Back to Home
+        </a>
+        <div class="hero-content">
+            <div class="hero-badge">🤖 Next Generation Learning</div>
+            <h1>Master <span class="highlight">Robotics</span><br>Build the Future</h1>
+            <p class="hero-subtitle">Transform your passion into expertise. Learn to design, build, and program
+                intelligent robots with hands-on training from industry experts.</p>
+            <div class="cta-buttons">
+                <a href="#register" class="btn btn-primary">Enroll Now</a>
+                <a href="#description" class="btn btn-outline">Learn More</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Course Description -->
+    <section id="description">
+        <div class="container">
+            <div class="section-header scroll-reveal">
+                <div class="section-label">Course Overview</div>
+                <h2>What You'll Learn</h2>
+                <p class="section-desc">A fun and interactive journey into the world of electronics and coding. Perfect
+                    for beginners of any age!</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card scroll-reveal">
+                    <div class="feature-icon">🔌</div>
+                    <h3>Electronics Basics</h3>
+                    <p>Understand the fundamentals of circuits, voltage, and current. Learn to safely use breadboards,
+                        resistors, LEDs, and batteries.</p>
+                </div>
+
+                <div class="feature-card scroll-reveal">
+                    <div class="feature-icon">💻</div>
+                    <h3>Arduino Programming</h3>
+                    <p>Write your first code! Learn C++ basics to control your robot's brain, making lights blink and
+                        motors spin with simple commands.</p>
+                </div>
+
+                <div class="feature-card scroll-reveal">
+                    <div class="feature-icon">👀</div>
+                    <h3>Sensors & Interaction</h3>
+                    <p>Give your robot senses. Use ultrasonic sensors to avoid obstacles, light sensors to follow paths,
+                        and buttons for user control.</p>
+                </div>
+
+                <div class="feature-card scroll-reveal">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>Motors & Mechanics</h3>
+                    <p>Bring your creations to life using DC motors and servo motors. Build moving parts and understand
+                        simple mechanical systems.</p>
+                </div>
+
+                <div class="feature-card scroll-reveal">
+                    <div class="feature-icon">🧩</div>
+                    <h3>Creative Projects</h3>
+                    <p>Apply what you learn to build fun projects like a Line Follower, Obstacle Avoider, or a Smart
+                        Home prototype.</p>
+                </div>
+
+                <div class="feature-card scroll-reveal">
+                    <div class="feature-icon">🏆</div>
+                    <h3>Logic & Teamwork</h3>
+                    <p>Develop critical thinking by solving coding puzzles. Collaborate with friends to design and build
+                        unique robot challenges.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery">
+        <div class="container">
+            <div class="section-header scroll-reveal">
+                <div class="section-label">Student Showcase</div>
+                <h2>Previous Projects</h2>
+                <p class="section-desc">See the amazing robots and projects created by our students during the course.
+                </p>
+            </div>
+
+            <div class="gallery-grid">
+                <div class="gallery-item scroll-reveal">
+                    <img src="../assest/cources/robotic/image/1 (1).jpg" alt="Robotics Project 1"
+                        style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+
+                <div class="gallery-item scroll-reveal">
+                    <img src="../assest/cources/robotic/image/1 (2).jpg" alt="Robotics Project 2"
+                        style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+
+                <div class="gallery-item scroll-reveal">
+                    <img src="../assest/cources/robotic/image/1 (3).jpg" alt="Robotics Project 3"
+                        style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+
+                <div class="gallery-item scroll-reveal">
+                    <img src="../assest/cources/robotic/image/1 (4).jpg" alt="Robotics Project 4"
+                        style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+
+                <div class="gallery-item scroll-reveal">
+                    <img src="../assest/cources/robotic/image/1 (5).jpg" alt="Robotics Project 5"
+                        style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+
+                <div class="gallery-item scroll-reveal">
+                    <img src="../assest/cources/robotic/image/2 (1).jpg" alt="Robotics Project 6"
+                        style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section id="videos">
+        <div class="container">
+            <div class="section-header scroll-reveal">
+                <div class="section-label">Watch & Learn</div>
+                <h2>Course Videos</h2>
+                <p class="section-desc">Get a glimpse into our program with highlights, student testimonials, and
+                    project demonstrations.</p>
+            </div>
+
+            <div class="video-grid">
+                <div class="video-card scroll-reveal">
+                    <video width="100%" height="auto" controls style="border-radius: 12px 12px 0 0;">
+                        <source src="../assest/cources/robotic/videos/1.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-info">
+                        <h3>Robotics Course Highlights</h3>
+                        <p>A glimpse into our classroom activities and student engagement.</p>
+                    </div>
+                </div>
+
+                <div class="video-card scroll-reveal">
+                    <video width="100%" height="auto" controls style="border-radius: 12px 12px 0 0;">
+                        <source src="../assest/cources/robotic/videos/1 (2).mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-info">
+                        <h3>Project Demonstrations</h3>
+                        <p>Watch students demonstrating their robotic creations.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Venue Details -->
+    <section id="venue">
+        <div class="container">
+            <div class="section-header scroll-reveal">
+                <div class="section-label">Join Us</div>
+                <h2>Venue & Schedule</h2>
+                <p class="section-desc">State-of-the-art facilities equipped with the latest robotics technology and
+                    tools.</p>
+            </div>
+
+            <div class="venue-grid">
+                <div class="venue-box scroll-reveal">
+                    <h3>📍 Location</h3>
+                    <p>
+                        <strong>Panhida Academy</strong><br>
+                        Embilipitiya<br>
+
+                        Sri Lanka
+                    </p>
+                </div>
+
+                <div class="venue-box scroll-reveal">
+                    <h3>🕐 Class Schedule</h3>
+                    <p>
+                        <strong>Weekend Intensive:</strong> Sat & Sun, 9:00 AM - 5:00 PM<br>
+                        <strong>Evening Classes:</strong> Mon, Wed, Fri, 6:30 PM - 9:30 PM<br>
+                        <strong>Duration:</strong> 4 Months<br>
+                        <strong>Next Cohort:</strong> February 15, 2026
+                    </p>
+                </div>
+
+                <div class="venue-box scroll-reveal">
+                    <h3>🎓 Course Details</h3>
+                    <p>
+                        <strong>Level:</strong> Any Level (No Age Limit)<br>
+                        <strong>Class Size:</strong> 25 students max<br>
+                        <strong>Language:</strong> Sinhala & English<br>
+                        <strong>Prerequisites:</strong> Basic programming (any language)
+                    </p>
+                </div>
+
+                <div class="venue-box scroll-reveal">
+                    <h3>💰 Investment</h3>
+                    <p>
+                        <strong>Full Course:</strong> Rs. 12,000<br>
+                        <strong>Early Bird (until Jan 31):</strong> Rs. 8,000<br>
+                        <strong>Includes:</strong> Robot kit, tools, materials, certification<br>
+                        <strong>Financing:</strong> Monthly payment plans available
+                    </p>
+                </div>
+
+                <div class="venue-box scroll-reveal">
+                    <h3>🚀 Facilities</h3>
+                    <p>
+                        3D printers & laser cutters • Electronics lab • Testing arena •
+                        Computing workstations • Secure parking •
+
+                    </p>
+                </div>
+
+                <div class="venue-box scroll-reveal">
+                    <h3>📞 Contact</h3>
+                    <p>
+                        <strong>Email:</strong> info@ictdilhara.lk<br>
+                        <strong>Phone:</strong> 0777 695130<br>
+                        <strong>WhatsApp:</strong> 0777 695130<br>
+                        <strong>Website:</strong> <a href="https://ictdilhara.lk">ictdilhara.lk</a><br>
+                        <strong>Office Hours:</strong> Mon-Fri, 9 AM - 6 PM PST
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section id="partners">
+        <div class="container">
+            <div class="section-header scroll-reveal">
+                <div class="section-label">Our Network</div>
+                <h2>Our Partners</h2>
+                <p class="section-desc">Proudly collaborating with leading educational institutions.</p>
+            </div>
+
+            <div class="logo-slider">
+                <div class="logo-track">
+                    <!-- Set 1 -->
+                    <div class="institute-card">
+                        <div class="institute-logo-box">
+                            <img src="../assest/logo/simple_acadamy.png" alt="Simple Acadamy">
+                        </div>
+                        <div class="institute-details">
+                            <div class="institute-name">Simple Acadamy</div>
+                            <div class="institute-location">Tunkama</div>
+                        </div>
+                    </div>
+                    <div class="institute-card">
+                        <div class="institute-logo-box">
+                            <img src="../assest/logo/panhida.PNG" alt="Panhida Education">
+                        </div>
+                        <div class="institute-details">
+                            <div class="institute-name">Panhida Education Institute</div>
+                            <div class="institute-location">Embilipitiya</div>
+                        </div>
+                    </div>
+                    <div class="institute-card">
+                        <div class="institute-logo-box">
+                            <img src="../assest/logo/orionlab.png" alt="Orionlab">
+                        </div>
+                        <div class="institute-details">
+                            <div class="institute-name">Orionlab</div>
+                            <div class="institute-location">www.orionlab.lk</div>
+                        </div>
+                    </div>
+
+                    <div class="institute-card">
+                        <div class="institute-logo-box">
+                            <img src="../assest/logo/maxibot.png" alt="maxibot">
+                        </div>
+                        <div class="institute-details">
+                            <div class="institute-name">Maxibot</div>
+                            <div class="institute-location">www.maxibot.lk</div>
+                        </div>
+                    </div>
+
+
+                    <div class="institute-card">
+                        <div class="institute-logo-box">
+                            <img src="../assest/logo/creative.png" alt="creative kids">
+                        </div>
+                        <div class="institute-details">
+                            <div class="institute-name">Creative Kids</div>
+                            <div class="institute-location"></div>
+                        </div>
+                    </div>
+
+                    <!-- Set 2 (Duplicate for smooth scrolling) -->
+                    <div class="institute-card">
+                        <div class="institute-logo-box">
+                            <img src="../assest/logo/simple_acadamy.png" alt="Simple Acadamy">
+                        </div>
+                        <div class="institute-details">
+                            <div class="institute-name">Simple Acadamy</div>
+                            <div class="institute-location">Tunkama</div>
+                        </div>
+                    </div>
+                    <div class="institute-card">
+                        <div class="institute-logo-box">
+                            <img src="../assest/logo/panhida.PNG" alt="Panhida Education">
+                        </div>
+                        <div class="institute-details">
+                            <div class="institute-name">Panhida Education Institute</div>
+                            <div class="institute-location">Embilipitiya</div>
+                        </div>
+                    </div>
+                    <div class="institute-card">
+                        <div class="institute-logo-box">
+                            <img src="../assest/logo/orionlab.png" alt="Orionlab">
+                        </div>
+                        <div class="institute-details">
+                            <div class="institute-name">Orionlab</div>
+                            <div class="institute-location">www.orionlab.lk</div>
+                        </div>
+                    </div>
+
+                    <div class="institute-card">
+                        <div class="institute-logo-box">
+                            <img src="../assest/logo/maxibot.png" alt="maxibot">
+                        </div>
+                        <div class="institute-details">
+                            <div class="institute-name">Maxibot</div>
+                            <div class="institute-location">www.maxibot.lk</div>
+                        </div>
+                    </div>
+
+                    <div class="institute-card">
+                        <div class="institute-logo-box">
+                            <img src="../assest/logo/creative.png" alt="creative kids">
+                        </div>
+                        <div class="institute-details">
+                            <div class="institute-name">Creative Kids</div>
+                            <div class="institute-location"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration Form -->
+    <section id="register">
+        <div class="container">
+            <div class="section-header scroll-reveal">
+                <div class="section-label">Limited Spots Available</div>
+                <h2>Reserve Your Spot</h2>
+                <p class="section-desc">Join the next generation of robotics engineers. Enrollment closes soon!</p>
+            </div>
+
+            <div class="form-wrapper">
+                <form action="submit.php" method="POST">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <input type="text" id="firstName" name="firstName" required placeholder="John">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <input type="text" id="lastName" name="lastName" required placeholder="Doe">
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required placeholder="john.doe@example.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" required placeholder="0777 695130">
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="batch">Preferred Schedule *</label>
+                            <select id="batch" name="batch" required>
+                                <option value="">Select schedule</option>
+                                <option value="weekend">Weekend Intensive (Sat-Sun)</option>
+                                <option value="evening">Evening Classes (Mon-Wed-Fri)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="experience">Programming Experience *</label>
+                            <select id="experience" name="experience" required>
+                                <option value="">Select level</option>
+                                <option value="beginner">Beginner</option>
+                                <option value="intermediate">Intermediate</option>
+                                <option value="advanced">Advanced</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="background">Educational/Professional Background</label>
+                        <input type="text" id="background" name="background"
+                            placeholder="e.g., Computer Science student, Software Engineer">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="goals">What are your learning goals?</label>
+                        <textarea id="goals" name="goals" rows="4"
+                            placeholder="Tell us what you hope to achieve with robotics..."></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Secure My Spot →</button>
+
+                    <p
+                        style="text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: rgba(255, 255, 255, 0.6);">
+                        By submitting this form, you agree to receive course updates and information.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy;ICT with Dilhara. All rights reserved.</p>
+            <p>Follow us:
+                <a href="https://web.facebook.com/profile.php?id=61585798923049">Facebook</a> •
+                <a href="https://www.tiktok.com/@sdilhara8?_r=1&_t=ZS-92yUexKLoP2">TikTok</a> •
+                <a href="#">Instagram</a> •
+                <a href="#">YouTube</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Check for success status
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('status') === 'success') {
+            alert('Registration successful! We will contact you shortly.');
+            // Clean up the URL
+            window.history.replaceState({}, document.title, window.location.pathname + window.location.hash);
+        }
+
+        // Scroll reveal animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
