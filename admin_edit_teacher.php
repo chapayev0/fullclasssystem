@@ -60,17 +60,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_teacher'])) {
         }
     }
 
+    // Account Update (Password)
+    $new_password = $_POST['new_password'];
+    $confirm_password = $_POST['confirm_password'];
+
+    if (!empty($new_password)) {
+        if ($new_password !== $confirm_password) {
+            $error_msg = "New passwords do not match!";
+        }
+    }
+
     if (empty($error_msg)) {
-        $stmt = $conn->prepare("UPDATE teachers SET name = ?, image = ?, qualifications = ?, phone = ?, whatsapp = ?, website = ?, email = ?, bio = ?, status = ? WHERE id = ?");
-        $stmt->bind_param("sssssssssi", $name, $image, $qualifications, $phone, $whatsapp, $website, $email, $bio, $status, $id);
-        
-        if ($stmt->execute()) {
-            $success_msg = "Teacher updated successfully!";
-            // Refresh teacher data
-            $result = $conn->query("SELECT * FROM teachers WHERE id = $id");
-            $teacher = $result->fetch_assoc();
-        } else {
-            $error_msg = "Error updating teacher: " . $stmt->error;
+        $conn->begin_transaction();
+        try {
+            // Update User details first
+            $update_user_sql = "UPDATE users SET email = ?, role = 'teacher' WHERE id = ?";
+            $stmt_u = $conn->prepare($update_user_sql);
+            $stmt_u->bind_param("si", $email, $teacher['user_id']);
+            $stmt_u->execute();
+
+            if (!empty($new_password)) {
+                $hashed = password_hash($new_password, PASSWORD_DEFAULT);
+                $conn->query("UPDATE users SET password = '$hashed' WHERE id = {$teacher['user_id']}");
+            }
+
+            // Update Teacher details
+            $stmt = $conn->prepare("UPDATE teachers SET name = ?, image = ?, qualifications = ?, phone = ?, whatsapp = ?, website = ?, email = ?, bio = ?, status = ? WHERE id = ?");
+            $stmt->bind_param("sssssssssi", $name, $image, $qualifications, $phone, $whatsapp, $website, $email, $bio, $status, $id);
+            
+            if ($stmt->execute()) {
+                $conn->commit();
+                $success_msg = "Teacher updated successfully!";
+                // Refresh teacher data
+                $result = $conn->query("SELECT * FROM teachers WHERE id = $id");
+                $teacher = $result->fetch_assoc();
+            } else {
+                throw new Exception("Error updating teacher: " . $stmt->error);
+            }
+        } catch (Exception $e) {
+            $conn->rollback();
+            $error_msg = $e->getMessage();
         }
     }
 }
@@ -185,6 +214,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_teacher'])) {
                 <div class="form-group hidden" id="upload-group">
                     <label class="form-label">Upload New Image</label>
                     <input type="file" name="teacher_image" class="form-control" accept="image/*">
+                </div>
+                
+                <div style="border-top: 1px solid #eee; margin-top: 2rem; padding-top: 1.5rem;">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 1rem; color: var(--dark);">Reset Login Password (Optional)</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label class="form-label">New Password</label>
+                            <input type="password" name="new_password" class="form-control" placeholder="Leave blank to keep current">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Confirm New Password</label>
+                            <input type="password" name="confirm_password" class="form-control" placeholder="Retype new password">
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="form-group hidden" id="url-group">

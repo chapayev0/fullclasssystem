@@ -31,6 +31,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if ($row['role'] == 'admin') {
                 header("Location: admin_dashboard.php");
+            } elseif ($row['role'] == 'teacher') {
+                header("Location: teacher_dashboard.php");
             } else {
                 header("Location: student_dashboard.php");
             }

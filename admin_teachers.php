@@ -51,6 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_teacher'])) {
     } else {
         if (isset($_FILES['teacher_image']) && $_FILES['teacher_image']['error'] == 0) {
             $target_dir = "uploads/teachers/";
+            if (!file_exists($target_dir)) mkdir($target_dir, 0777, true);
             $file_extension = pathinfo($_FILES["teacher_image"]["name"], PATHINFO_EXTENSION);
             $new_filename = uniqid('teacher_') . '.' . $file_extension;
             $target_file = $target_dir . $new_filename;
@@ -63,14 +64,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_teacher'])) {
         }
     }
 
+    // Account Data
+    $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
+
+    if ($password !== $confirm_password) {
+        $error_msg = "Passwords do not match!";
+    }
+
     if (empty($error_msg)) {
-        $stmt = $conn->prepare("INSERT INTO teachers (name, image, qualifications, phone, whatsapp, website, email, bio) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssssss", $name, $image, $qualifications, $phone, $whatsapp, $website, $email, $bio);
-        
-        if ($stmt->execute()) {
-            $success_msg = "Teacher added successfully!";
-        } else {
-            $error_msg = "Error adding teacher: " . $stmt->error;
+        $conn->begin_transaction();
+        try {
+            // 1. Create User Account with temp username
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $temp_username = uniqid('t_');
+            $role = 'teacher';
+            
+            $sql_user = "INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)";
+            $stmt_user = $conn->prepare($sql_user);
+            $stmt_user->bind_param("ssss", $temp_username, $email, $hashed_password, $role);
+            if (!$stmt_user->execute()) throw new Exception("User account creation failed: " . $stmt_user->error);
+            
+            $user_id = $conn->insert_id;
+            
+            // 2. Generate final username: 't' + first letter of name + last name + user_id
+            $name_parts = explode(' ', trim($name));
+            $fname = strtolower(preg_replace('/[^a-zA-Z]/', '', $name_parts[0]));
+            $lname = (count($name_parts) > 1) ? strtolower(preg_replace('/[^a-zA-Z]/', '', end($name_parts))) : '';
+            $final_username = 't' . substr($fname, 0, 1) . $lname . $user_id;
+            
+            $conn->query("UPDATE users SET username = '$final_username' WHERE id = $user_id");
+
+            // 3. Create Teacher Record linked to User
+            $stmt = $conn->prepare("INSERT INTO teachers (user_id, name, image, qualifications, phone, whatsapp, website, email, bio) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("issssssss", $user_id, $name, $image, $qualifications, $phone, $whatsapp, $website, $email, $bio);
+            
+            if ($stmt->execute()) {
+                $conn->commit();
+                $success_msg = "Teacher added successfully! Username: <strong>$final_username</strong>";
+            } else {
+                throw new Exception("Error adding teacher: " . $stmt->error);
+            }
+        } catch (Exception $e) {
+            $conn->rollback();
+            $error_msg = $e->getMessage();
         }
     }
 }
@@ -237,6 +274,16 @@ if ($result) {
                     <div class="form-group" id="upload-group">
                         <label class="form-label">Upload Image</label>
                         <input type="file" name="teacher_image" class="form-control" accept="image/*">
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" name="password" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Confirm Password</label>
+                            <input type="password" name="confirm_password" class="form-control" required>
+                        </div>
                     </div>
                     <div class="form-group hidden" id="url-group">
                         <label class="form-label">Image URL</label>
