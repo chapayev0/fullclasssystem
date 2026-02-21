@@ -306,7 +306,6 @@
                 </li>
                 
                 <li><a href="index.php#classes">Classes</a></li>
-                <li><a href="index.php#store">Store</a></li>
                 <li><a href="about.php" class="<?php echo ($current_page == 'about.php') ? 'active' : ''; ?>">About</a></li>
             </ul>
             <div class="nav-buttons">

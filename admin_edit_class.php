@@ -15,14 +15,22 @@ if (!$class_id) {
     exit();
 }
 
+// Fetch Subjects for dropdown
+$subjects_list = [];
+$s_result = $conn->query("SELECT name FROM subjects ORDER BY name ASC");
+if ($s_result) {
+    while ($s_row = $s_result->fetch_assoc()) {
+        $subjects_list[] = $s_row['name'];
+    }
+}
+
 $success_msg = '';
 $error_msg = '';
 
 // Handle Update
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_class'])) {
     $grade = $_POST['grade'];
-    $institute_name = $_POST['institute_name'];
-    $institute_address = $_POST['institute_address'];
+    $subject = $_POST['subject'];
     $institute_phone = $_POST['institute_phone'];
     $class_day = $_POST['class_day'];
     $start_time = $_POST['start_time'];
@@ -73,8 +81,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_class'])) {
         // Let's just set it to '🏫' to satisfy the query, or remove it from query.
         // Removing from query is cleaner.
         
-        $stmt = $conn->prepare("UPDATE classes SET grade=?, institute_name=?, institute_address=?, institute_phone=?, class_day=?, start_time=?, end_time=?, description=?, class_logo=? WHERE id=?");
-        $stmt->bind_param("issssssssi", $grade, $institute_name, $institute_address, $institute_phone, $class_day, $start_time, $end_time, $description, $class_logo, $class_id);
+        $stmt = $conn->prepare("UPDATE classes SET grade=?, subject=?, institute_phone=?, class_day=?, start_time=?, end_time=?, description=?, class_logo=? WHERE id=?");
+        $stmt->bind_param("issssssssi", $grade, $subject, $institute_phone, $class_day, $start_time, $end_time, $description, $class_logo, $class_id);
 
         if ($stmt->execute()) {
             $success_msg = "Class updated successfully!";
@@ -239,17 +247,19 @@ if (!$class) {
                         </div>
                         
                         <div class="form-group">
-                            <label class="form-label">Institute Name</label>
-                            <input type="text" name="institute_name" class="form-control" value="<?php echo htmlspecialchars($class['institute_name']); ?>" required>
+                            <label class="form-label">Class Subject</label>
+                            <select name="subject" class="form-control" required>
+                                <option value="">-- Select Subject --</option>
+                                <?php foreach ($subjects_list as $s_name): ?>
+                                    <option value="<?php echo htmlspecialchars($s_name); ?>" <?php echo ($class['subject'] == $s_name) ? 'selected' : ''; ?>>
+                                        <?php echo htmlspecialchars($s_name); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                         
                         <div class="form-group">
-                            <label class="form-label">Institute Address</label>
-                            <input type="text" name="institute_address" class="form-control" value="<?php echo htmlspecialchars($class['institute_address']); ?>" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">Phone Number</label>
+                            <label class="form-label">Contact Phone Number</label>
                             <input type="text" name="institute_phone" class="form-control" value="<?php echo htmlspecialchars($class['institute_phone']); ?>" required>
                         </div>
                     </div>
@@ -280,11 +290,11 @@ if (!$class) {
                         </div>
                         
                         <div class="form-group">
-                            <label class="form-label">Institute Logo</label>
+                            <label class="form-label">Class Image</label>
                             
                             <!-- Current Logo Preview -->
                             <div style="margin-bottom: 1rem; padding: 10px; border: 1px dashed #ccc; border-radius: 8px; text-align: center;">
-                                <label style="display: block; font-size: 0.8rem; color: var(--gray); margin-bottom: 0.5rem;">Current Logo:</label>
+                                <label style="display: block; font-size: 0.8rem; color: var(--gray); margin-bottom: 0.5rem;">Current Image:</label>
                                 <?php if (!empty($class['class_logo'])): ?>
                                     <img src="<?php echo htmlspecialchars($class['class_logo']); ?>" alt="Current Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; border: 1px solid #eee;">
                                 <?php else: ?>

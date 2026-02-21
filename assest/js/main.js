@@ -125,6 +125,46 @@ if (teachersWrapper) {
             }, 3000);
         });
     }
+
+    // Refresh Teachers Data from API
+    async function refreshTeachers() {
+        try {
+            const response = await fetch('api_teachers.php');
+            const data = await response.json();
+
+            if (data && data.length > 0) {
+                let html = '';
+                data.forEach(t => {
+                    html += `
+                        <div class="teacher-card">
+                            <img src="${t.image}" alt="${t.name}" class="teacher-image"
+                                onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=random'">
+                            <div class="teacher-info">
+                                <h3 class="teacher-name">${t.name}</h3>
+                                <p class="teacher-qual">${t.qualifications}</p>
+                                <span class="teacher-class">${t.bio}</span>
+                            </div>
+                        </div>`;
+                });
+
+                // Only update if content has changed to avoid unnecessary re-renders
+                if (teachersWrapper.innerHTML.trim() !== html.trim()) {
+                    teachersWrapper.innerHTML = html;
+                    // Reset scroll position if the number of teachers changed
+                    teacherScrollPosition = 0;
+                    teachersWrapper.style.transform = `translateX(0)`;
+                }
+            }
+        } catch (error) {
+            console.error('Error refreshing teachers:', error);
+        }
+    }
+
+    // Initial refresh check
+    refreshTeachers();
+
+    // Set interval for real-time updates (every 30 seconds)
+    setInterval(refreshTeachers, 30000);
 }
 
 // Smooth scroll for navigation links

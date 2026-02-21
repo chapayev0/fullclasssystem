@@ -1,12 +1,15 @@
 <?php include 'db_connect.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ICT with Dilhara ICT Academy | Excellence in Digital Education</title>
     <link rel="icon" type="image/png" href="assest/logo/logo1.png">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --primary: #000000;
@@ -70,7 +73,7 @@
             color: #ffffff;
             text-transform: uppercase;
             letter-spacing: 2px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             line-height: 1.2;
         }
 
@@ -95,12 +98,12 @@
             transition: all 0.3s ease;
             display: inline-block;
             border-radius: 50px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .promo-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
         }
 
         .banner-robot {
@@ -110,7 +113,7 @@
             width: 400px;
             height: auto;
             transform: rotate(-10deg);
-            filter: drop-shadow(-20px 20px 30px rgba(0,0,0,0.5));
+            filter: drop-shadow(-20px 20px 30px rgba(0, 0, 0, 0.5));
             z-index: 1;
             opacity: 0.9;
             pointer-events: none;
@@ -123,7 +126,7 @@
             width: 100%;
             height: 100%;
             background-image: radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 20%),
-                              radial-gradient(circle at 90% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 20%);
+                radial-gradient(circle at 90% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 20%);
             z-index: 0;
         }
 
@@ -148,7 +151,7 @@
                 margin: 0;
                 max-width: 60%;
             }
-            
+
             .promo-desc {
                 margin-left: 0;
             }
@@ -196,7 +199,7 @@
                 margin-top: 2rem;
                 transform: rotate(-5deg);
                 opacity: 1;
-                filter: drop-shadow(-10px 10px 20px rgba(0,0,0,0.4));
+                filter: drop-shadow(-10px 10px 20px rgba(0, 0, 0, 0.4));
             }
         }
 
@@ -217,6 +220,7 @@
                 transform: translateY(-100%);
                 opacity: 0;
             }
+
             to {
                 transform: translateY(0);
                 opacity: 1;
@@ -343,17 +347,17 @@
 
         .slide-1 {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 248, 251, 0.98)),
-                        url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect fill="%23F8F8FB" width="100" height="100"/><circle cx="50" cy="50" r="30" fill="%23E5E5E8" opacity="0.5"/></svg>');
+                url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect fill="%23F8F8FB" width="100" height="100"/><circle cx="50" cy="50" r="30" fill="%23E5E5E8" opacity="0.5"/></svg>');
         }
 
         .slide-2 {
             background: linear-gradient(135deg, rgba(248, 248, 251, 0.98), rgba(255, 255, 255, 0.98)),
-                        url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect fill="%23FFFFFF" width="100" height="100"/><polygon points="50,20 90,80 10,80" fill="%23F8F8FB" opacity="0.5"/></svg>');
+                url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect fill="%23FFFFFF" width="100" height="100"/><polygon points="50,20 90,80 10,80" fill="%23F8F8FB" opacity="0.5"/></svg>');
         }
 
         .slide-3 {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(243, 244, 246, 0.98)),
-                        url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect fill="%23F3F4F6" width="100" height="100"/><rect x="20" y="20" width="60" height="60" fill="%23E5E7EB" opacity="0.5"/></svg>');
+                url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect fill="%23F3F4F6" width="100" height="100"/><rect x="20" y="20" width="60" height="60" fill="%23E5E7EB" opacity="0.5"/></svg>');
         }
 
         .slide-content {
@@ -392,6 +396,7 @@
                 transform: translateY(40px);
                 opacity: 0;
             }
+
             to {
                 transform: translateY(0);
                 opacity: 1;
@@ -568,6 +573,7 @@
             0% {
                 transform: translateX(0);
             }
+
             100% {
                 transform: translateX(-50%);
             }
@@ -627,114 +633,6 @@
 
 
 
-        /* Store Section */
-        .store-carousel {
-            position: relative;
-            overflow: hidden;
-            padding: 2rem 0;
-        }
-
-        .products-wrapper {
-            display: flex;
-            gap: 2rem;
-            transition: transform 0.5s ease;
-        }
-
-        .product-card {
-            min-width: 350px;
-            background: var(--light);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: all 0.3s ease;
-            border: 1px solid var(--border);
-        }
-
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .product-image {
-            width: 100%;
-            height: 250px;
-            background: var(--secondary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 5rem;
-            color: var(--dark);
-            overflow: hidden;
-        }
-
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .product-info {
-            padding: 2rem;
-        }
-
-        .product-name {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--dark);
-        }
-
-        .product-description {
-            color: var(--gray);
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
-        }
-
-        .product-price {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-        }
-
-        .product-actions {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .btn-cart {
-            flex: 1;
-            background: var(--primary);
-            color: var(--light);
-            padding: 0.8rem;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-cart:hover {
-            background: var(--primary-hover);
-            transform: translateY(-2px);
-        }
-
-        .btn-cart.secondary {
-            background: var(--secondary);
-            color: var(--dark);
-            border: 1px solid var(--border);
-        }
-
-        .btn-cart.secondary:hover {
-            background: var(--accent);
-        }
-
-        .carousel-nav {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
 
         .carousel-btn {
             width: 50px;
@@ -874,22 +772,64 @@
         }
 
         @keyframes float {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: translateY(0) translateX(0);
             }
+
             50% {
                 transform: translateY(-20px) translateX(10px);
             }
         }
 
-        .particle:nth-child(1) { top: 15%; right: 20%; animation-delay: 0s; }
-        .particle:nth-child(2) { top: 25%; right: 15%; animation-delay: 0.5s; }
-        .particle:nth-child(3) { top: 35%; right: 25%; animation-delay: 1s; }
-        .particle:nth-child(4) { top: 20%; right: 30%; animation-delay: 1.5s; }
-        .particle:nth-child(5) { top: 30%; right: 18%; animation-delay: 2s; }
-        .particle:nth-child(6) { top: 40%; left: 20%; animation-delay: 0.3s; }
-        .particle:nth-child(7) { top: 25%; left: 15%; animation-delay: 0.8s; }
-        .particle:nth-child(8) { top: 35%; left: 25%; animation-delay: 1.3s; }
+        .particle:nth-child(1) {
+            top: 15%;
+            right: 20%;
+            animation-delay: 0s;
+        }
+
+        .particle:nth-child(2) {
+            top: 25%;
+            right: 15%;
+            animation-delay: 0.5s;
+        }
+
+        .particle:nth-child(3) {
+            top: 35%;
+            right: 25%;
+            animation-delay: 1s;
+        }
+
+        .particle:nth-child(4) {
+            top: 20%;
+            right: 30%;
+            animation-delay: 1.5s;
+        }
+
+        .particle:nth-child(5) {
+            top: 30%;
+            right: 18%;
+            animation-delay: 2s;
+        }
+
+        .particle:nth-child(6) {
+            top: 40%;
+            left: 20%;
+            animation-delay: 0.3s;
+        }
+
+        .particle:nth-child(7) {
+            top: 25%;
+            left: 15%;
+            animation-delay: 0.8s;
+        }
+
+        .particle:nth-child(8) {
+            top: 35%;
+            left: 25%;
+            animation-delay: 1.3s;
+        }
 
         /* Footer */
         .footer {
@@ -1002,6 +942,7 @@
 
         /* Responsive Design */
         @media (max-width: 1024px) {
+
             .classes-grid,
             .testimonials-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -1017,6 +958,7 @@
         }
 
         @media (max-width: 768px) {
+
             /* Content Stacking */
             .slide-title {
                 font-size: 2.5rem;
@@ -1039,7 +981,7 @@
             .footer-content {
                 grid-template-columns: 1fr;
             }
-            
+
             .navbar-container {
                 padding: 1rem;
             }
@@ -1055,12 +997,12 @@
             .dilhara-text .large-text {
                 font-size: 30vw;
             }
-            
+
             .hero-section {
                 height: auto;
                 min-height: 90vh;
             }
-            
+
             .slide-content {
                 position: relative;
                 top: auto;
@@ -1071,6 +1013,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Navigation Header -->
     <!-- Navigation Header -->
@@ -1082,21 +1025,24 @@
             <div class="slide slide-1 active">
                 <div class="slide-content">
                     <h1 class="slide-title">Master ICT Skills for the Digital Future</h1>
-                    <p class="slide-description">Join Sri Lanka's premier ICT academy and unlock your potential with expert guidance and comprehensive curriculum</p>
+                    <p class="slide-description">Join Sri Lanka's premier ICT academy and unlock your potential with
+                        expert guidance and comprehensive curriculum</p>
                     <button class="btn btn-primary slide-btn">Explore Classes</button>
                 </div>
             </div>
             <div class="slide slide-2">
                 <div class="slide-content">
                     <h1 class="slide-title">Learn from Industry Experts</h1>
-                    <p class="slide-description">Our experienced instructors bring real-world knowledge to help you excel in O/L ICT examinations</p>
+                    <p class="slide-description">Our experienced instructors bring real-world knowledge to help you
+                        excel in O/L ICT examinations</p>
                     <button class="btn btn-primary slide-btn">Meet Our Team</button>
                 </div>
             </div>
             <div class="slide slide-3">
                 <div class="slide-content">
                     <h1 class="slide-title">Flexible Online & Physical Classes</h1>
-                    <p class="slide-description">Choose your learning path with our hybrid model - attend in person or join from anywhere in Sri Lanka</p>
+                    <p class="slide-description">Choose your learning path with our hybrid model - attend in person or
+                        join from anywhere in Sri Lanka</p>
                     <button class="btn btn-primary slide-btn" onclick="openJoinModal()">Join Online</button>
                 </div>
             </div>
@@ -1114,111 +1060,140 @@
             <h2 class="section-title">Our Classes</h2>
             <p class="section-subtitle">Diverse range of subjects to empower your knowledge, from Sciences to Arts.</p>
         </div>
-        
+
         <style>
-             .class-card {
-                min-width: 370px; /* Consistent width for carousel */
-                padding: 0; /* Remove padding to let image flush */
+            .classes-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+                gap: 2.5rem;
+                margin-top: 3rem;
+            }
+
+            .class-card {
+                background: var(--light);
+                border-radius: 20px;
+                padding: 0;
                 display: flex;
                 flex-direction: column;
+                overflow: hidden;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+                border: 1px solid var(--border);
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                height: 100%;
+                position: relative;
+            }
+
+            .class-card:hover {
+                transform: translateY(-12px);
+                box-shadow: 0 25px 60px rgba(0, 0, 0, 0.08);
+                border-color: var(--primary);
             }
 
             .class-image {
                 width: 100%;
-                height: 200px;
-                background: var(--secondary);
+                height: 220px;
+                background: linear-gradient(135deg, var(--gray-light) 0%, var(--accent) 100%);
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                font-size: 4rem;
-                color: var(--primary);
+                font-size: 5rem;
+                overflow: hidden;
+                position: relative;
+            }
+
+            .class-image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 0.6s ease;
+            }
+
+            .class-card:hover .class-image img {
+                transform: scale(1.1);
             }
 
             .class-content {
-                padding: 2rem;
+                padding: 2.5rem;
                 flex: 1;
                 display: flex;
                 flex-direction: column;
+                background: white;
             }
 
             .class-title {
-                font-size: 1.5rem;
-                margin-bottom: 0.5rem;
+                font-size: 1.8rem;
+                font-weight: 800;
+                margin-bottom: 0.8rem;
+                color: var(--primary);
+                letter-spacing: -0.5px;
             }
 
             .class-description {
+                font-size: 1.05rem;
+                color: var(--gray);
+                margin-bottom: 2rem;
                 flex: 1;
+                line-height: 1.7;
+            }
+
+            .class-btn {
+                background: var(--primary);
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 12px;
+                font-weight: 700;
+                text-decoration: none;
+                text-align: center;
+                transition: all 0.3s ease;
                 font-size: 0.95rem;
+                border: 2px solid var(--primary);
+            }
+
+            .class-btn:hover {
+                background: transparent;
+                color: var(--primary);
+            }
+
+            @media (max-width: 768px) {
+                .classes-grid {
+                    grid-template-columns: 1fr;
+                    gap: 1.5rem;
+                }
             }
         </style>
 
-        <div class="classes-carousel">
-            <div class="classes-wrapper" id="classesWrapper">
-                <!-- Science -->
+        <div class="classes-grid">
+            <?php
+            $subjects_query = $conn->query("SELECT * FROM subjects ORDER BY name ASC");
+            if ($subjects_query && $subjects_query->num_rows > 0):
+                while ($s = $subjects_query->fetch_assoc()):
+            ?>
                 <div class="class-card">
-                    <div class="class-image">🔬</div>
+                    <div class="class-image">
+                        <?php if (!empty($s['subject_logo'])): ?>
+                            <img src="<?php echo htmlspecialchars($s['subject_logo']); ?>" alt="<?php echo htmlspecialchars($s['name']); ?>">
+                        <?php else: ?>
+                            <?php echo !empty($s['logo_emoji']) ? htmlspecialchars($s['logo_emoji']) : '📚'; ?>
+                        <?php endif; ?>
+                    </div>
                     <div class="class-content">
-                        <h3 class="class-title">Science</h3>
-                        <p class="class-description">Explore the wonders of biology, chemistry, and physics with hands-on experiments.</p>
-                        <a href="#" class="class-btn" style="text-decoration: none; display: inline-block; text-align: center;">View Time Table</a>
+                        <h3 class="class-title"><?php echo htmlspecialchars($s['name']); ?></h3>
+                        <p class="class-description"><?php echo htmlspecialchars($s['description']); ?></p>
+                        <a href="timetable.php?subject=<?php echo urlencode($s['name']); ?>" class="class-btn">View Time Table</a>
                     </div>
                 </div>
-
-                <!-- Mathematics -->
+            <?php 
+                endwhile;
+            else: 
+            ?>
                 <div class="class-card">
-                    <div class="class-image">📐</div>
+                    <div class="class-image">📚</div>
                     <div class="class-content">
-                        <h3 class="class-title">Mathematics</h3>
-                        <p class="class-description">Master algebra, geometry, and calculus with our expert guidance.</p>
-                        <a href="#" class="class-btn" style="text-decoration: none; display: inline-block; text-align: center;">View Time Table</a>
+                        <h3 class="class-title">Coming Soon</h3>
+                        <p class="class-description">New subjects are being added to our curriculum. Stay tuned!</p>
                     </div>
                 </div>
-
-                <!-- Arts -->
-                <div class="class-card">
-                    <div class="class-image">🎨</div>
-                    <div class="class-content">
-                        <h3 class="class-title">Arts</h3>
-                        <p class="class-description">Unleash your creativity through drawing, painting, and digital art.</p>
-                        <a href="#" class="class-btn" style="text-decoration: none; display: inline-block; text-align: center;">View Time Table</a>
-                    </div>
-                </div>
-
-                <!-- Economics -->
-                <div class="class-card">
-                    <div class="class-image">📊</div>
-                    <div class="class-content">
-                        <h3 class="class-title">Economics</h3>
-                        <p class="class-description">Understand market dynamics, finance, and global economic trends.</p>
-                        <a href="#" class="class-btn" style="text-decoration: none; display: inline-block; text-align: center;">View Time Table</a>
-                    </div>
-                </div>
-
-                <!-- History -->
-                <div class="class-card">
-                    <div class="class-image">🏛️</div>
-                    <div class="class-content">
-                        <h3 class="class-title">History</h3>
-                        <p class="class-description">Journey through time to understand the events that shaped our world.</p>
-                        <a href="#" class="class-btn" style="text-decoration: none; display: inline-block; text-align: center;">View Time Table</a>
-                    </div>
-                </div>
-
-                <!-- ICT (Kept as one general item) -->
-                <div class="class-card">
-                    <div class="class-image">💻</div>
-                    <div class="class-content">
-                        <h3 class="class-title">ICT</h3>
-                        <p class="class-description">Comprehensive computer science education from basics to advanced programming.</p>
-                        <a href="#" class="class-btn" style="text-decoration: none; display: inline-block; text-align: center;">View Time Table</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="carousel-nav">
-            <button class="carousel-btn" onclick="scrollClasses(-1)">‹</button>
-            <button class="carousel-btn" onclick="scrollClasses(1)">›</button>
+            <?php endif; ?>
         </div>
     </section>
 
@@ -1226,12 +1201,13 @@
     <section class="promo-banner section">
         <div class="promo-content">
             <h2 class="promo-title">Robotics Mastery Course</h2>
-            <p class="promo-desc">Unlock the future with hands-on learning in Arduino, electronics, and coding. Designed for beginners and enthusiasts alike.</p>
+            <p class="promo-desc">Unlock the future with hands-on learning in Arduino, electronics, and coding. Designed
+                for beginners and enthusiasts alike.</p>
             <a href="reg/index.html" class="promo-btn">
                 Enroll Now <span style="margin-left: 8px;">→</span>
             </a>
         </div>
-        
+
         <!-- Robot Car Image -->
         <img src="assest/images/robot_car_banner.png" alt="Robot Car" class="banner-robot">
 
@@ -1329,60 +1305,49 @@
 
         <div class="teachers-carousel">
             <div class="teachers-wrapper" id="teachersWrapper">
-                <!-- Teacher 1 -->
-                <div class="teacher-card">
-                    <img src="assest/images/dilhara1.jpg" alt="Mr. S. Dilhara" class="teacher-image" onerror="this.src='https://ui-avatars.com/api/?name=S+Dilhara&background=random'">
-                    <div class="teacher-info">
-                        <h3 class="teacher-name">Mr. S. Dilhara</h3>
-                        <p class="teacher-qual">BSc in IT (Hons), 5+ Years Exp</p>
-                        <span class="teacher-class">ICT (Grade 6-11)</span>
-                        <a href="tel:0777695130" class="teacher-contact">📞 0777 695 130</a>
+                <?php
+                $teacher_result = $conn->query("SELECT * FROM teachers WHERE status = 'active' ORDER BY created_at ASC");
+                if ($teacher_result && $teacher_result->num_rows > 0):
+                    while ($t = $teacher_result->fetch_assoc()):
+                ?>
+                    <div class="teacher-card">
+                        <img src="<?php echo htmlspecialchars($t['image']); ?>" alt="<?php echo htmlspecialchars($t['name']); ?>" class="teacher-image"
+                            onerror="this.src='https://ui-avatars.com/api/?name=<?php echo urlencode($t['name']); ?>&background=random'">
+                        <div class="teacher-info">
+                            <h3 class="teacher-name"><?php echo htmlspecialchars($t['name']); ?></h3>
+                            <p class="teacher-qual"><?php echo htmlspecialchars($t['qualifications']); ?></p>
+                            <span class="teacher-class"><?php echo strip_tags($t['bio']); ?></span>
+                            
+                            <div style="display: flex; gap: 0.5rem; justify-content: center; margin-top: 0.5rem;">
+                                <?php if(!empty($t['phone'])): ?>
+                                    <a href="tel:<?php echo htmlspecialchars($t['phone']); ?>" class="teacher-contact" title="Call">📞</a>
+                                <?php endif; ?>
+                                
+                                <?php if(!empty($t['whatsapp'])): ?>
+                                    <a href="https://wa.me/<?php echo preg_replace('/[^0-9]/', '', $t['whatsapp']); ?>" target="_blank" class="teacher-contact" title="WhatsApp">💬</a>
+                                <?php endif; ?>
+                                
+                                <?php if(!empty($t['email'])): ?>
+                                    <a href="mailto:<?php echo htmlspecialchars($t['email']); ?>" class="teacher-contact" title="Email">📧</a>
+                                <?php endif; ?>
+                                
+                                <?php if(!empty($t['website'])): ?>
+                                    <a href="<?php echo htmlspecialchars($t['website']); ?>" target="_blank" class="teacher-contact" title="Website">🌐</a>
+                                <?php endif; ?>
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <!-- Teacher 2 -->
-                <div class="teacher-card">
-                    <img src="https://ui-avatars.com/api/?name=Sarah+Perera&background=random" alt="Ms. Sarah Perera" class="teacher-image">
-                    <div class="teacher-info">
-                        <h3 class="teacher-name">Ms. Sarah Perera</h3>
-                        <p class="teacher-qual">BSc in Mathematics, PGDE</p>
-                        <span class="teacher-class">Mathematics</span>
-                        <a href="tel:0712345678" class="teacher-contact">📞 071 234 5678</a>
+                <?php 
+                    endwhile;
+                else: 
+                ?>
+                    <div class="teacher-card">
+                        <div class="teacher-info" style="padding: 2rem;">
+                            <h3 class="teacher-name">Coming Soon</h3>
+                            <p class="teacher-qual">Our expert teachers are joining soon.</p>
+                        </div>
                     </div>
-                </div>
-
-                <!-- Teacher 3 -->
-                <div class="teacher-card">
-                    <img src="https://ui-avatars.com/api/?name=Kamal+Dias&background=random" alt="Mr. Kamal Dias" class="teacher-image">
-                    <div class="teacher-info">
-                        <h3 class="teacher-name">Mr. Kamal Dias</h3>
-                        <p class="teacher-qual">BSc in Science, MSc</p>
-                        <span class="teacher-class">Science</span>
-                        <a href="tel:0771122334" class="teacher-contact">📞 077 112 2334</a>
-                    </div>
-                </div>
-
-                <!-- Teacher 4 -->
-                <div class="teacher-card">
-                    <img src="https://ui-avatars.com/api/?name=Nimali+Silva&background=random" alt="Ms. Nimali Silva" class="teacher-image">
-                    <div class="teacher-info">
-                        <h3 class="teacher-name">Ms. Nimali Silva</h3>
-                        <p class="teacher-qual">BA in English (Hons)</p>
-                        <span class="teacher-class">English</span>
-                        <a href="tel:0755566778" class="teacher-contact">📞 075 556 6778</a>
-                    </div>
-                </div>
-                
-                <!-- Teacher 5 -->
-                 <div class="teacher-card">
-                    <img src="https://ui-avatars.com/api/?name=Ruwan+Fernando&background=random" alt="Mr. Ruwan Fernando" class="teacher-image">
-                    <div class="teacher-info">
-                        <h3 class="teacher-name">Mr. Ruwan Fernando</h3>
-                        <p class="teacher-qual">BA in History, MPhil</p>
-                        <span class="teacher-class">History</span>
-                        <a href="tel:0789900112" class="teacher-contact">📞 078 990 0112</a>
-                    </div>
-                </div>
+                <?php endif; ?>
             </div>
         </div>
 
@@ -1394,61 +1359,128 @@
 
 
 
-    <!-- Store Section -->
-    <section class="section" id="store">
+    <!-- Gallery Section -->
+    <section class="section" id="gallery">
         <div class="section-header">
-            <h2 class="section-title">ICT Learning Resources</h2>
-            <p class="section-subtitle">Premium study materials, textbooks, and resources to support your ICT learning journey</p>
+            <h2 class="section-title">Our Gallery</h2>
+            <p class="section-subtitle">A glimpse into our vibrant learning environment, student projects, and academy
+                life.</p>
         </div>
-        <div class="store-carousel">
-            <div class="products-wrapper" id="productsWrapper">
-                <?php
-                // Fetch products with their primary image
-                $products_sql = "SELECT p.*, 
-                                (SELECT image_url FROM product_images WHERE product_id = p.id AND is_primary = 1 LIMIT 1) as primary_image,
-                                (SELECT image_url FROM product_images WHERE product_id = p.id ORDER BY id ASC LIMIT 1) as fallback_image
-                                FROM store_products p 
-                                ORDER BY p.created_at ASC";
-                $products_res = $conn->query($products_sql);
-                
-                if ($products_res->num_rows > 0) {
-                    while ($product = $products_res->fetch_assoc()) {
-                        // Use primary image, otherwise fallback (e.g. first added), otherwise placeholder
-                        $display_image = $product['primary_image'] ?: $product['fallback_image'] ?: '📦';
-                ?>
-                <div class="product-card">
-                    <a href="product_details.php?id=<?php echo $product['id']; ?>" style="text-decoration: none; color: inherit; display: block;">
-                        <div class="product-image">
-                            <?php if (filter_var($display_image, FILTER_VALIDATE_URL) || file_exists($display_image) || strpos($display_image, 'assest/') === 0): ?>
-                                <img src="<?php echo htmlspecialchars($display_image); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
-                            <?php else: ?>
-                                <?php echo htmlspecialchars($display_image); ?>
-                            <?php endif; ?>
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-name"><?php echo htmlspecialchars($product['name']); ?></h3>
-                            <p class="product-description"><?php echo htmlspecialchars($product['description']); ?></p>
-                            <div class="product-price">Rs. <?php echo number_format($product['price'], 0); ?></div>
-                        </div>
-                    </a>
-                    <div class="product-info" style="padding-top: 0;">
-                        <div class="product-actions">
-                            <button class="btn-cart">Buy Now</button>
-                            <button class="btn-cart secondary">Add to Cart</button>
-                        </div>
-                    </div>
+
+        <style>
+            .gallery-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 1.5rem;
+                padding: 1rem;
+            }
+
+            .gallery-item {
+                position: relative;
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: var(--shadow);
+                cursor: pointer;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                aspect-ratio: 4/3;
+                /* Maintain consistent aspect ratio */
+            }
+
+            .gallery-item:hover {
+                transform: translateY(-5px);
+                box-shadow: var(--shadow-lg);
+            }
+
+            .gallery-item img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 0.5s ease;
+            }
+
+            .gallery-item:hover img {
+                transform: scale(1.05);
+            }
+
+            .gallery-overlay {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                padding: 1.5rem;
+                background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                display: flex;
+                align-items: flex-end;
+            }
+
+            .gallery-item:hover .gallery-overlay {
+                opacity: 1;
+            }
+
+            .gallery-caption {
+                color: #fff;
+                font-weight: 600;
+                font-size: 1.1rem;
+                transform: translateY(20px);
+                transition: transform 0.3s ease;
+            }
+
+            .gallery-item:hover .gallery-caption {
+                transform: translateY(0);
+            }
+        </style>
+
+        <div class="gallery-grid">
+            <!-- Gallery Item 1 -->
+            <div class="gallery-item">
+                <img src="assest/images/dilhara1.jpg" alt="Classroom Activity" loading="lazy">
+                <div class="gallery-overlay">
+                    <p class="gallery-caption">Interactive Classroom Sessions</p>
                 </div>
-                <?php 
-                    }
-                } else {
-                    echo '<p style="text-align:center; padding: 2rem;">No products available at the moment.</p>';
-                }
-                ?>
             </div>
-        </div>
-        <div class="carousel-nav">
-            <button class="carousel-btn" onclick="scrollProducts(-1)">‹</button>
-            <button class="carousel-btn" onclick="scrollProducts(1)">›</button>
+
+            <!-- Gallery Item 2 -->
+            <div class="gallery-item">
+                <img src="assest/images/robot_car_banner.png" alt="Robotics Workshop" loading="lazy">
+                <div class="gallery-overlay">
+                    <p class="gallery-caption">Hands-on Robotics Workshops</p>
+                </div>
+            </div>
+
+            <!-- Gallery Item 3 -->
+            <div class="gallery-item">
+                <img src="assest/images/playground/game_697278cc4bd85.png" alt="Student Projects" loading="lazy">
+                <div class="gallery-overlay">
+                    <p class="gallery-caption">Innovative Student Projects</p>
+                </div>
+            </div>
+
+            <!-- Gallery Item 4 (Placeholder) -->
+            <div class="gallery-item">
+                <img src="https://placehold.co/600x400/0062E6/ffffff?text=Practical+Labs" alt="Computer Lab"
+                    loading="lazy">
+                <div class="gallery-overlay">
+                    <p class="gallery-caption">State-of-the-Art Computer Labs</p>
+                </div>
+            </div>
+
+            <!-- Gallery Item 5 (Placeholder) -->
+            <div class="gallery-item">
+                <img src="https://placehold.co/600x400/333333/ffffff?text=Award+Ceremony" alt="Awards" loading="lazy">
+                <div class="gallery-overlay">
+                    <p class="gallery-caption">Celebrating Student Achievements</p>
+                </div>
+            </div>
+
+            <!-- Gallery Item 6 (Placeholder) -->
+            <div class="gallery-item">
+                <img src="https://placehold.co/600x400/666666/ffffff?text=Group+Study" alt="Group Study" loading="lazy">
+                <div class="gallery-overlay">
+                    <p class="gallery-caption">Collaborative Learning Environment</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1461,7 +1493,8 @@
         <div class="testimonials-grid">
             <div class="testimonial-card">
                 <div class="quote-icon">"</div>
-                <p class="testimonial-text">ICT with Dilhara Academy transformed my understanding of ICT. The teachers are amazing and the materials are comprehensive. I scored an A in my O/Levels!</p>
+                <p class="testimonial-text">ICT with Dilhara Academy transformed my understanding of ICT. The teachers
+                    are amazing and the materials are comprehensive. I scored an A in my O/Levels!</p>
                 <div class="testimonial-author">
                     <div class="author-avatar">AS</div>
                     <div class="author-info">
@@ -1473,7 +1506,8 @@
             </div>
             <div class="testimonial-card">
                 <div class="quote-icon">"</div>
-                <p class="testimonial-text">The online classes are incredibly convenient and interactive. I can learn at my own pace and the support from teachers is excellent. Highly recommend!</p>
+                <p class="testimonial-text">The online classes are incredibly convenient and interactive. I can learn at
+                    my own pace and the support from teachers is excellent. Highly recommend!</p>
                 <div class="testimonial-author">
                     <div class="author-avatar">KP</div>
                     <div class="author-info">
@@ -1485,7 +1519,8 @@
             </div>
             <div class="testimonial-card">
                 <div class="quote-icon">"</div>
-                <p class="testimonial-text">Best ICT class in Colombo! The practical approach and exam-focused teaching helped me build confidence. My son improved from C to A in just 6 months.</p>
+                <p class="testimonial-text">Best ICT class in Colombo! The practical approach and exam-focused teaching
+                    helped me build confidence. My son improved from C to A in just 6 months.</p>
                 <div class="testimonial-author">
                     <div class="author-avatar">NF</div>
                     <div class="author-info">
@@ -1510,4 +1545,5 @@
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script src="assest/js/main.js"></script>
 </body>
+
 </html>

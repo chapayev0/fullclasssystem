@@ -217,13 +217,13 @@ $stmt->close();
         .institute-logo-placeholder img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: cover;
         }
 
         .institute-name {
             font-size: 1.8rem;
             font-weight: 700;
-            color: var(--dark);
+            color: var(--primary);
         }
 
         .card-body {
@@ -441,24 +441,24 @@ $stmt->close();
                     <div class="card-header">
                         <div class="institute-logo-placeholder">
                             <?php 
-                            $logoSrc = !empty($class['class_logo']) ? $class['class_logo'] : 'https://placehold.co/100x100?text=Logo'; 
+                            $logoSrc = !empty($class['class_logo']) ? $class['class_logo'] : 'https://placehold.co/300x200?text=Class+Image'; 
                             ?>
-                            <img src="<?php echo htmlspecialchars($logoSrc); ?>" alt="<?php echo htmlspecialchars($class['institute_name']); ?> Logo">
+                            <img src="<?php echo htmlspecialchars($logoSrc); ?>" alt="Class Image">
                         </div>
-                        <h3 class="institute-name"><?php echo htmlspecialchars($class['institute_name']); ?></h3>
+                        <h3 class="institute-name">ICT Grade <?php echo htmlspecialchars($class['grade']); ?></h3>
                     </div>
                     <div class="card-body">
                         <div class="info-row">
-                            <div class="info-icon">📍</div>
+                            <div class="info-icon">📚</div>
                             <div class="info-content">
-                                <div class="info-label">Address</div>
-                                <div class="info-value"><?php echo htmlspecialchars($class['institute_address']); ?></div>
+                                <div class="info-label">Subject</div>
+                                <div class="info-value"><?php echo htmlspecialchars($class['subject']); ?></div>
                             </div>
                         </div>
                         <div class="info-row">
                             <div class="info-icon">📞</div>
                             <div class="info-content">
-                                <div class="info-label">Phone</div>
+                                <div class="info-label">Contact</div>
                                 <div class="info-value"><?php echo htmlspecialchars($class['institute_phone']); ?></div>
                             </div>
                         </div>

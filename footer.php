@@ -25,8 +25,6 @@
                 <ul class="footer-links">
                     <li><a href="#home">Home</a></li>
                     <li><a href="#classes">Classes</a></li>
-
-                    <li><a href="#store">Store</a></li>
                     <li><a href="#testimonials">Reviews</a></li>
                 </ul>
             </div>

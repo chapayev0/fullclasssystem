@@ -14,8 +14,7 @@ $error_msg = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_class'])) {
     $grade = $_POST['grade'];
-    $institute_name = $_POST['institute_name'];
-    $institute_address = $_POST['institute_address'];
+    $subject = $_POST['subject'];
     $institute_phone = $_POST['institute_phone'];
     $class_day = $_POST['class_day'];
     $start_time = $_POST['start_time'];
@@ -52,13 +51,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_class'])) {
     elseif (!empty($_POST['logo_url'])) {
         $class_logo = $_POST['logo_url'];
     }
-
     if (empty($error_msg)) {
-        // Use a default emoji if needed for the old column, or just empty
         $logo_emoji = '🏫'; 
 
-        $stmt = $conn->prepare("INSERT INTO classes (grade, institute_name, institute_address, institute_phone, class_day, start_time, end_time, description, logo_emoji, class_logo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("isssssssss", $grade, $institute_name, $institute_address, $institute_phone, $class_day, $start_time, $end_time, $description, $logo_emoji, $class_logo);
+        $stmt = $conn->prepare("INSERT INTO classes (grade, subject, institute_phone, class_day, start_time, end_time, description, logo_emoji, class_logo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("issssssss", $grade, $subject, $institute_phone, $class_day, $start_time, $end_time, $description, $logo_emoji, $class_logo);
 
         if ($stmt->execute()) {
             $success_msg = "Class added successfully!";
@@ -88,6 +85,15 @@ $result = $conn->query("SELECT * FROM classes ORDER BY grade ASC, created_at DES
 if ($result) {
     while ($row = $result->fetch_assoc()) {
         $classes[] = $row;
+    }
+}
+
+// Fetch Subjects for dropdown
+$subjects_list = [];
+$s_result = $conn->query("SELECT name FROM subjects ORDER BY name ASC");
+if ($s_result) {
+    while ($s_row = $s_result->fetch_assoc()) {
+        $subjects_list[] = $s_row['name'];
     }
 }
 ?>
@@ -263,7 +269,7 @@ if ($result) {
     <div class="main-content">
         <div class="header">
             <h1>Manage Classes</h1>
-            <p style="color: var(--gray);">Add, edit, or delete ICT classs schedules.</p>
+            <p style="color: var(--gray);">Add, edit, or delete class schedules.</p>
         </div>
         
         <?php if ($success_msg): ?>
@@ -285,10 +291,9 @@ if ($result) {
                     <table>
                         <thead>
                             <tr>
-                                <th>Grade</th>
-                                <th>Institute</th>
+                                <th>Grade & Image</th>
                                 <th>Day & Time</th>
-                                <th>Phone</th>
+                                <th>Contact</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -301,19 +306,15 @@ if ($result) {
                                 <?php foreach ($classes as $class): ?>
                                     <tr>
                                         <td>
-                                            <span style="font-weight: 700; color: var(--dark);"><?php echo $class['grade']; ?></span>
-                                            <br>
-                                            <div style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; background: #eee; display: flex; align-items: center; justify-content: center; border: 1px solid #ddd;">
+                                            <span style="font-weight: 700; color: var(--dark);">Grade <?php echo $class['grade']; ?></span>
+                                            <div style="font-size: 0.85rem; color: var(--gray); margin-bottom: 0.3rem;"><?php echo htmlspecialchars($class['subject']); ?></div>
+                                            <div style="width: 60px; height: 60px; border-radius: 12px; overflow: hidden; background: #eee; display: flex; align-items: center; justify-content: center; border: 1px solid #ddd; margin-top: 0.2rem;">
                                                 <?php if (!empty($class['class_logo'])): ?>
-                                                    <img src="<?php echo htmlspecialchars($class['class_logo']); ?>" alt="Logo" style="width: 100%; height: 100%; object-fit: cover;">
+                                                    <img src="<?php echo htmlspecialchars($class['class_logo']); ?>" alt="Class Image" style="width: 100%; height: 100%; object-fit: cover;">
                                                 <?php else: ?>
                                                     <span style="font-size: 1.5rem;"><?php echo !empty($class['logo_emoji']) ? htmlspecialchars($class['logo_emoji']) : '🏫'; ?></span>
                                                 <?php endif; ?>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <div style="font-weight: 600;"><?php echo htmlspecialchars($class['institute_name']); ?></div>
-                                            <div style="font-size: 0.9rem; color: var(--gray);"><?php echo htmlspecialchars($class['institute_address']); ?></div>
                                         </td>
                                         <td>
                                             <div style="color: var(--primary); font-weight: 600;"><?php echo htmlspecialchars($class['class_day']); ?></div>
@@ -358,17 +359,17 @@ if ($result) {
                             </div>
                             
                             <div class="form-group">
-                                <label class="form-label">Institute Name</label>
-                                <input type="text" name="institute_name" class="form-control" placeholder="e.g. Royal Institute" required>
+                                <label class="form-label">Class Subject</label>
+                                <select name="subject" class="form-control" required>
+                                    <option value="">Select Subject</option>
+                                    <?php foreach ($subjects_list as $s_name): ?>
+                                        <option value="<?php echo htmlspecialchars($s_name); ?>"><?php echo htmlspecialchars($s_name); ?></option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                             
                             <div class="form-group">
-                                <label class="form-label">Institute Address</label>
-                                <input type="text" name="institute_address" class="form-control" placeholder="e.g. 123 Main St, Colombo" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">Phone Number</label>
+                                <label class="form-label">Contact Phone Number</label>
                                 <input type="text" name="institute_phone" class="form-control" placeholder="e.g. +94 77 123 4567" required>
                             </div>
                         </div>
@@ -399,7 +400,7 @@ if ($result) {
                             </div>
                             
                             <div class="form-group">
-                                <label class="form-label">Institute Logo</label>
+                                <label class="form-label">Class Image</label>
                                 <div style="margin-bottom: 0.5rem;">
                                     <input type="text" name="logo_url" class="form-control" placeholder="Image URL (e.g. https://placehold.co/100)">
                                 </div>

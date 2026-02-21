@@ -10,21 +10,12 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 // Analytics Queries
 // 1. Total Counts
 $total_students = $conn->query("SELECT COUNT(*) as count FROM students")->fetch_assoc()['count'];
-$total_products = $conn->query("SELECT COUNT(*) as count FROM store_products")->fetch_assoc()['count'];
 $total_classes = $conn->query("SELECT COUNT(*) as count FROM classes")->fetch_assoc()['count'];
-$total_resources = $conn->query("SELECT COUNT(*) as count FROM resources")->fetch_assoc()['count'];
 
-// 2. Grade-wise Analytics (Initialize 6-11)
 $analytics = [];
 for ($i = 6; $i <= 11; $i++) {
     $analytics[$i] = [
-        'student_count' => 0,
-        'resources' => [
-            'theory' => 0,
-            'paper' => 0,
-            'tute' => 0,
-            'materials' => 0
-        ]
+        'student_count' => 0
     ];
 }
 
@@ -37,15 +28,6 @@ while ($row = $stu_res->fetch_assoc()) {
     }
 }
 
-// Fetch Resource Counts per Grade & Category
-$res_query = $conn->query("SELECT grade, category, COUNT(*) as count FROM resources GROUP BY grade, category");
-while ($row = $res_query->fetch_assoc()) {
-    $g = intval($row['grade']);
-    $cat = strtolower($row['category']);
-    if (isset($analytics[$g]) && isset($analytics[$g]['resources'][$cat])) {
-        $analytics[$g]['resources'][$cat] = $row['count'];
-    }
-}
 
 ?>
 <!DOCTYPE html>
@@ -133,11 +115,6 @@ while ($row = $res_query->fetch_assoc()) {
         .grade-title { font-weight: 700; color: var(--dark); font-size: 1.1rem; }
         .student-badge { background: var(--primary); color: white; padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
         
-        .grade-body { padding: 1.5rem; }
-        .resource-list { display: flex; gap: 1rem; flex-wrap: wrap; }
-        .res-item { flex: 1; text-align: center; background: #F1F5F9; padding: 0.8rem; border-radius: 8px; min-width: 80px; }
-        .res-count { display: block; font-size: 1.2rem; font-weight: 700; color: var(--dark); }
-        .res-label { font-size: 0.8rem; color: var(--gray); font-weight: 600; }
     </style>
 </head>
 <body>
@@ -162,24 +139,10 @@ while ($row = $res_query->fetch_assoc()) {
                 </div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon icon-purple">🛒</div>
-                <div class="stat-info">
-                    <h3><?php echo $total_products; ?></h3>
-                    <p>Store Products</p>
-                </div>
-            </div>
-            <div class="stat-card">
                 <div class="stat-icon icon-green">🏫</div>
                 <div class="stat-info">
                     <h3><?php echo $total_classes; ?></h3>
                     <p>Active Classes</p>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon icon-orange">📚</div>
-                <div class="stat-info">
-                    <h3><?php echo $total_resources; ?></h3>
-                    <p>Total Resources</p>
                 </div>
             </div>
         </div>
@@ -192,23 +155,6 @@ while ($row = $res_query->fetch_assoc()) {
                     <div class="grade-header">
                         <div class="grade-title">Grade <?php echo $grade; ?></div>
                         <div class="student-badge"><?php echo $data['student_count']; ?> Students</div>
-                    </div>
-                    <div class="grade-body">
-                        <div style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--gray); font-weight: 600;">Uploaded Resources</div>
-                        <div class="resource-list">
-                            <div class="res-item">
-                                <span class="res-count"><?php echo $data['resources']['theory']; ?></span>
-                                <span class="res-label">Theory</span>
-                            </div>
-                            <div class="res-item">
-                                <span class="res-count"><?php echo $data['resources']['paper']; ?></span>
-                                <span class="res-label">Papers</span>
-                            </div>
-                            <div class="res-item">
-                                <span class="res-count"><?php echo $data['resources']['tute']; ?></span>
-                                <span class="res-label">Tutes</span>
-                            </div>
-                        </div>
                     </div>
                 </div>
             <?php endforeach; ?>

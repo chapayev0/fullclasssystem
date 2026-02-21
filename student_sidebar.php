@@ -14,7 +14,6 @@
         <a href="link_library.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'link_library.php' ? 'active' : ''; ?>">Link Library</a>
         <a href="student_profile.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'student_profile.php' ? 'active' : ''; ?>">My Profile</a>
         <a href="student_messages.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'student_messages.php' ? 'active' : ''; ?>">Messages</a>
-        <a href="wall_of_talent.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'wall_of_talent.php' ? 'active' : ''; ?>">Wall of Talent</a>
         <a href="#" onclick="openLogoutModal()" class="nav-link">Logout</a>
     </nav>
 </div>
