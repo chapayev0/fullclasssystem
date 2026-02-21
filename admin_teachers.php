@@ -101,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_teacher'])) {
             
             if ($stmt->execute()) {
                 $conn->commit();
-                $success_msg = "Teacher added successfully! Username: <strong>$final_username</strong>";
+                $success_msg = "Teacher added successfully!";
             } else {
                 throw new Exception("Error adding teacher: " . $stmt->error);
             }
