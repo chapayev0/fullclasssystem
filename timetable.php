@@ -35,6 +35,7 @@ if ($result) {
     <style>
         :root {
             --primary: #000000;
+            --primary-hover: #333333;
             --secondary: #F8F8FB;
             --accent: #E5E5E8;
             --dark: #1A1A1A;

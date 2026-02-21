@@ -831,94 +831,6 @@
             animation-delay: 1.3s;
         }
 
-        /* Footer */
-        .footer {
-            background: var(--secondary);
-            color: var(--dark);
-            padding: 4rem 2rem 2rem;
-            border-top: 1px solid var(--border);
-        }
-
-        .footer-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 3rem;
-            margin-bottom: 3rem;
-        }
-
-        .footer-brand h3 {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            font-family: 'Space Mono', monospace;
-            color: var(--primary);
-        }
-
-        .footer-brand p {
-            color: var(--gray);
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .social-link {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--dark);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border: 1px solid var(--border);
-        }
-
-        .social-link:hover {
-            background: var(--primary);
-            color: var(--light);
-            transform: translateY(-3px);
-        }
-
-        .footer-section h4 {
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            font-weight: 700;
-            color: var(--dark);
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.8rem;
-        }
-
-        .footer-links a {
-            color: var(--gray);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--primary);
-            padding-left: 5px;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border);
-            color: var(--gray);
-        }
 
         /* Responsive Design */
         @media (max-width: 1024px) {
@@ -1310,7 +1222,7 @@
                 if ($teacher_result && $teacher_result->num_rows > 0):
                     while ($t = $teacher_result->fetch_assoc()):
                 ?>
-                    <div class="teacher-card">
+                    <div class="teacher-card" onclick="window.location.href='teacher_details.php?id=<?php echo $t['id']; ?>'" style="cursor: pointer;">
                         <img src="<?php echo htmlspecialchars($t['image']); ?>" alt="<?php echo htmlspecialchars($t['name']); ?>" class="teacher-image"
                             onerror="this.src='https://ui-avatars.com/api/?name=<?php echo urlencode($t['name']); ?>&background=random'">
                         <div class="teacher-info">
@@ -1320,19 +1232,19 @@
                             
                             <div style="display: flex; gap: 0.5rem; justify-content: center; margin-top: 0.5rem;">
                                 <?php if(!empty($t['phone'])): ?>
-                                    <a href="tel:<?php echo htmlspecialchars($t['phone']); ?>" class="teacher-contact" title="Call">📞</a>
+                                    <a href="tel:<?php echo htmlspecialchars($t['phone']); ?>" class="teacher-contact" onclick="event.stopPropagation()" title="Call">📞</a>
                                 <?php endif; ?>
                                 
                                 <?php if(!empty($t['whatsapp'])): ?>
-                                    <a href="https://wa.me/<?php echo preg_replace('/[^0-9]/', '', $t['whatsapp']); ?>" target="_blank" class="teacher-contact" title="WhatsApp">💬</a>
+                                    <a href="https://wa.me/<?php echo preg_replace('/[^0-9]/', '', $t['whatsapp']); ?>" target="_blank" class="teacher-contact" onclick="event.stopPropagation()" title="WhatsApp">💬</a>
                                 <?php endif; ?>
                                 
                                 <?php if(!empty($t['email'])): ?>
-                                    <a href="mailto:<?php echo htmlspecialchars($t['email']); ?>" class="teacher-contact" title="Email">📧</a>
+                                    <a href="mailto:<?php echo htmlspecialchars($t['email']); ?>" class="teacher-contact" onclick="event.stopPropagation()" title="Email">📧</a>
                                 <?php endif; ?>
                                 
                                 <?php if(!empty($t['website'])): ?>
-                                    <a href="<?php echo htmlspecialchars($t['website']); ?>" target="_blank" class="teacher-contact" title="Website">🌐</a>
+                                    <a href="<?php echo htmlspecialchars($t['website']); ?>" target="_blank" class="teacher-contact" onclick="event.stopPropagation()" title="Website">🌐</a>
                                 <?php endif; ?>
                             </div>
                         </div>

@@ -135,14 +135,22 @@ if (teachersWrapper) {
             if (data && data.length > 0) {
                 let html = '';
                 data.forEach(t => {
+                    const whatsappClean = t.whatsapp ? t.whatsapp.replace(/[^0-9]/g, '') : '';
                     html += `
-                        <div class="teacher-card">
+                        <div class="teacher-card" onclick="window.location.href='teacher_details.php?id=${t.id}'" style="cursor: pointer;">
                             <img src="${t.image}" alt="${t.name}" class="teacher-image"
                                 onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(t.name)}&background=random'">
                             <div class="teacher-info">
                                 <h3 class="teacher-name">${t.name}</h3>
                                 <p class="teacher-qual">${t.qualifications}</p>
                                 <span class="teacher-class">${t.bio}</span>
+                                
+                                <div style="display: flex; gap: 0.5rem; justify-content: center; margin-top: 0.5rem;">
+                                    ${t.phone ? `<a href="tel:${t.phone}" class="teacher-contact" onclick="event.stopPropagation()" title="Call">📞</a>` : ''}
+                                    ${t.whatsapp ? `<a href="https://wa.me/${whatsappClean}" target="_blank" class="teacher-contact" onclick="event.stopPropagation()" title="WhatsApp">💬</a>` : ''}
+                                    ${t.email ? `<a href="mailto:${t.email}" class="teacher-contact" onclick="event.stopPropagation()" title="Email">📧</a>` : ''}
+                                    ${t.website ? `<a href="${t.website}" target="_blank" class="teacher-contact" onclick="event.stopPropagation()" title="Website">🌐</a>` : ''}
+                                </div>
                             </div>
                         </div>`;
                 });

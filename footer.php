@@ -58,7 +58,114 @@
         <button id="backToTop" class="back-to-top">↑</button>
 
         <style>
+            /* Footer Styling */
+            .footer {
+                background: var(--secondary);
+                color: var(--dark);
+                padding: 4rem 2rem 2rem;
+                border-top: 1px solid var(--border);
+                margin-top: 4rem;
+            }
 
+            .footer-content {
+                max-width: 1400px;
+                margin: 0 auto;
+                display: grid;
+                grid-template-columns: 2fr 1fr 1fr 1fr;
+                gap: 3rem;
+                margin-bottom: 3rem;
+            }
+
+            .footer-brand div {
+                margin-bottom: 1.5rem;
+            }
+
+            .footer-brand p {
+                color: var(--gray);
+                line-height: 1.8;
+                margin-bottom: 1.5rem;
+                font-size: 0.95rem;
+            }
+
+            .footer-section h4 {
+                font-size: 1.2rem;
+                margin-bottom: 1.5rem;
+                font-weight: 700;
+                color: var(--dark);
+            }
+
+            .footer-links {
+                list-style: none;
+            }
+
+            .footer-links li {
+                margin-bottom: 0.8rem;
+            }
+
+            .footer-links a {
+                color: var(--gray);
+                text-decoration: none;
+                transition: all 0.3s ease;
+                font-size: 0.95rem;
+            }
+
+            .footer-links a:hover {
+                color: var(--primary);
+                padding-left: 5px;
+            }
+
+            .social-links {
+                display: flex;
+                gap: 1rem;
+            }
+
+            .social-link {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: var(--light);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--dark);
+                text-decoration: none;
+                transition: all 0.3s ease;
+                border: 1px solid var(--border);
+            }
+
+            .social-link:hover {
+                background: var(--primary);
+                color: var(--light);
+                transform: translateY(-3px);
+            }
+
+            .footer-bottom {
+                text-align: center;
+                padding-top: 2rem;
+                border-top: 1px solid var(--border);
+                color: var(--gray);
+                font-size: 0.9rem;
+            }
+
+            /* Responsive Footer */
+            @media (max-width: 1024px) {
+                .footer-content {
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 2rem;
+                }
+            }
+
+            @media (max-width: 768px) {
+                .footer-content {
+                    grid-template-columns: 1fr;
+                    text-align: center;
+                }
+
+                .footer-brand div, .social-links {
+                    display: flex;
+                    justify-content: center;
+                }
+            }
 
             .back-to-top {
                 position: fixed;
