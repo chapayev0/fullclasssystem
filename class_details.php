@@ -1,10 +1,11 @@
 <?php 
 include 'db_connect.php'; 
+include 'helpers.php';
 
 // Validate and clean the grade input
 $grade = isset($_GET['grade']) ? intval($_GET['grade']) : 0;
-// Only allow grades 6-11
-if ($grade < 6 || $grade > 11) {
+// Only allow grades 6-13
+if ($grade < 6 || $grade > 13) {
     header("Location: index.php");
     exit();
 }
@@ -24,7 +25,7 @@ $stmt->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grade <?php echo $grade; ?> ICT Classes | ICT with Dilhara</title>
+    <title><?php echo format_grade($grade); ?> ICT Classes | ICT with Dilhara</title>
     <link rel="icon" type="image/png" href="assest/logo/logo1.png">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -332,15 +333,15 @@ $stmt->close();
 
     <!-- Page Header -->
     <header class="page-header">
-        <h1 class="page-title">Grade <?php echo $grade; ?> ICT Classes</h1>
-        <p class="page-subtitle">Start your journey into the digital world with our comprehensive Grade <?php echo $grade; ?> curriculum available at these leading institutes.</p>
+        <h1 class="page-title"><?php echo format_grade($grade); ?> ICT Classes</h1>
+        <p class="page-subtitle">Start your journey into the digital world with our comprehensive <?php echo format_grade($grade); ?> curriculum available at these leading institutes.</p>
     </header>
 
     <!-- Institutes Cards -->
     <section class="institutes-grid">
         <?php if (empty($classes)): ?>
             <div style="grid-column: span 2; text-align: center; color: var(--gray); font-size: 1.2rem; padding: 4rem;">
-                <p>No classes scheduled for Grade <?php echo $grade; ?> at the moment. Please check back later.</p>
+                <p>No classes scheduled for <?php echo format_grade($grade); ?> at the moment. Please check back later.</p>
             </div>
         <?php else: ?>
             <?php foreach ($classes as $class): ?>
@@ -352,7 +353,7 @@ $stmt->close();
                             ?>
                             <img src="<?php echo htmlspecialchars($logoSrc); ?>" alt="Class Image">
                         </div>
-                        <h3 class="institute-name">ICT Grade <?php echo htmlspecialchars($class['grade']); ?></h3>
+                        <h3 class="institute-name">ICT <?php echo format_grade($class['grade']); ?></h3>
                     </div>
                     <div class="card-body">
                         <div class="info-row">

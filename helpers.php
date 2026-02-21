@@ -96,4 +96,20 @@ function verify_csrf_token($token) {
     }
     return true;
 }
+
+/**
+ * Format grade number with its category (O/L or A/L) if applicable.
+ * @param int|string $grade The grade number.
+ * @return string The formatted grade string.
+ */
+function format_grade($grade) {
+    if (!$grade) return '';
+    $grade = (int)$grade;
+    if ($grade == 10 || $grade == 11) {
+        return "Grade $grade (O/L)";
+    } elseif ($grade == 12 || $grade == 13) {
+        return "Grade $grade (A/L)";
+    }
+    return "Grade $grade";
+}
 ?>

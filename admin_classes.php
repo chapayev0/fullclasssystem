@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'db_connect.php';
+include 'helpers.php';
 
 // Check if admin
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
@@ -306,7 +307,7 @@ if ($s_result) {
                                 <?php foreach ($classes as $class): ?>
                                     <tr>
                                         <td>
-                                            <span style="font-weight: 700; color: var(--dark);">Grade <?php echo $class['grade']; ?></span>
+                                            <span style="font-weight: 700; color: var(--dark);"><?php echo format_grade($class['grade']); ?></span>
                                             <div style="font-size: 0.85rem; color: var(--gray); margin-bottom: 0.3rem;"><?php echo htmlspecialchars($class['subject']); ?></div>
                                             <div style="width: 60px; height: 60px; border-radius: 12px; overflow: hidden; background: #eee; display: flex; align-items: center; justify-content: center; border: 1px solid #ddd; margin-top: 0.2rem;">
                                                 <?php if (!empty($class['class_logo'])): ?>
@@ -349,12 +350,9 @@ if ($s_result) {
                                 <label class="form-label">Grade</label>
                                 <select name="grade" class="form-control" required>
                                     <option value="">Select Grade</option>
-                                    <option value="6">Grade 6</option>
-                                    <option value="7">Grade 7</option>
-                                    <option value="8">Grade 8</option>
-                                    <option value="9">Grade 9</option>
-                                    <option value="10">Grade 10 (O/L)</option>
-                                    <option value="11">Grade 11 (A/L)</option>
+                                    <?php for($i=6; $i<=13; $i++): ?>
+                                        <option value="<?php echo $i; ?>"><?php echo format_grade($i); ?></option>
+                                    <?php endfor; ?>
                                 </select>
                             </div>
                             

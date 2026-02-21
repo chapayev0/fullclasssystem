@@ -231,7 +231,7 @@ if ($result->num_rows > 0) {
                     </div>
                     <div class="profile-item">
                         <span class="label">Grade</span>
-                        <div class="value"><?php echo htmlspecialchars($student['grade']); ?></div>
+                        <div class="value"><?php echo format_grade($student['grade']); ?></div>
                     </div>
                     <div class="profile-item">
                         <span class="label">Date of Birth</span>

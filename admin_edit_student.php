@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'db_connect.php';
+include 'helpers.php';
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header("Location: login.php");
@@ -139,8 +140,8 @@ if (!$student) {
                     <div class="form-group">
                         <label class="form-label">Grade</label>
                         <select name="grade" class="form-control" required>
-                            <?php for($i=6; $i<=11; $i++): ?>
-                                <option value="<?php echo $i; ?>" <?php if($student['grade'] == $i) echo 'selected'; ?>>Grade <?php echo $i; ?></option>
+                            <?php for($i=6; $i<=13; $i++): ?>
+                                <option value="<?php echo $i; ?>" <?php if($student['grade'] == $i) echo 'selected'; ?>><?php echo format_grade($i); ?></option>
                             <?php endfor; ?>
                         </select>
                     </div>

@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'db_connect.php';
+include 'helpers.php';
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header("Location: login.php");
@@ -298,8 +299,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input type="tel" name="phone" value="<?php echo htmlspecialchars($phone); ?>" required>
                     </div>
                     <div class="form-group">
-                        <label>Grade</label>
-                        <input type="text" name="grade" value="<?php echo htmlspecialchars($grade); ?>" required>
+                        <select name="grade" required>
+                            <option value="">Select Grade</option>
+                            <?php for($i=6; $i<=13; $i++) echo "<option value='$i' " . ($grade == $i ? 'selected' : '') . ">" . format_grade($i) . "</option>"; ?>
+                        </select>
                     </div>
                     <div class="form-group full-width">
                         <label>Address</label>

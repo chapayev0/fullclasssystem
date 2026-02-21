@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'db_connect.php';
+include 'helpers.php';
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header("Location: login.php");
@@ -192,7 +193,7 @@ if ($result) {
                                 <td><?php echo date('M d, Y', strtotime($req['created_at'])); ?></td>
                                 <td>
                                     <div style="font-weight:700; color:var(--dark);"><?php echo htmlspecialchars($req['first_name'] . ' ' . $req['last_name']); ?></div>
-                                    <div style="font-size:0.9rem; color:var(--gray);">Grade <?php echo htmlspecialchars($req['grade']); ?></div>
+                                    <div style="font-size:0.9rem; color:var(--gray);"><?php echo format_grade($req['grade']); ?></div>
                                 </td>
                                 <td>
                                     <div><strong>Parent:</strong> <?php echo htmlspecialchars($req['parent_name']); ?></div>

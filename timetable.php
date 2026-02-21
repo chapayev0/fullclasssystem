@@ -1,5 +1,6 @@
 <?php
 include 'db_connect.php';
+include 'helpers.php';
 
 $subject_filter = isset($_GET['subject']) ? $_GET['subject'] : '';
 
@@ -178,7 +179,7 @@ if ($result) {
                 <?php foreach ($classes as $c): ?>
                     <div class="timetable-card">
                         <div class="class-info">
-                            <span class="grade-badge">Grade <?php echo $c['grade']; ?></span>
+                            <span class="grade-badge"><?php echo format_grade($c['grade']); ?></span>
                             <h2 class="subject-name"><?php echo htmlspecialchars($c['subject']); ?></h2>
                             
                             <div class="schedule-item">

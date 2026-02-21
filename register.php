@@ -1,5 +1,6 @@
 <?php
 include 'db_connect.php';
+include 'helpers.php';
 
 $message = '';
 $error = '';
@@ -137,9 +138,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label>Grade</label>
                     <select name="grade" required>
                         <option value="">Select Grade</option>
-                        <?php for($i=6; $i<=11; $i++) {
+                        <?php for($i=6; $i<=13; $i++) {
                             $selected = ($grade == $i) ? 'selected' : '';
-                            echo "<option value='$i' $selected>Grade $i</option>"; 
+                            echo "<option value='$i' $selected>" . format_grade($i) . "</option>"; 
                         } ?>
                     </select>
                 </div>

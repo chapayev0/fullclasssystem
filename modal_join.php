@@ -21,6 +21,8 @@
                     <option value="Grade 9">Grade 9 ICT</option>
                     <option value="Grade 10">Grade 10 ICT (O/L)</option>
                     <option value="Grade 11">Grade 11 ICT (O/L)</option>
+                    <option value="Grade 12">Grade 12 ICT (A/L)</option>
+                    <option value="Grade 13">Grade 13 ICT (A/L)</option>
                     <option value="Other">Other</option>
                 </select>
             </div>

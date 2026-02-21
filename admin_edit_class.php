@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'db_connect.php';
+include 'helpers.php';
 
 // Check if admin
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
@@ -237,12 +238,9 @@ if (!$class) {
                         <div class="form-group">
                             <label class="form-label">Grade</label>
                             <select name="grade" class="form-control" required>
-                                <option value="6" <?php if($class['grade'] == 6) echo 'selected'; ?>>Grade 6</option>
-                                <option value="7" <?php if($class['grade'] == 7) echo 'selected'; ?>>Grade 7</option>
-                                <option value="8" <?php if($class['grade'] == 8) echo 'selected'; ?>>Grade 8</option>
-                                <option value="9" <?php if($class['grade'] == 9) echo 'selected'; ?>>Grade 9</option>
-                                <option value="10" <?php if($class['grade'] == 10) echo 'selected'; ?>>Grade 10 (O/L)</option>
-                                <option value="11" <?php if($class['grade'] == 11) echo 'selected'; ?>>Grade 11 (A/L)</option>
+                                <?php for($i=6; $i<=13; $i++): ?>
+                                    <option value="<?php echo $i; ?>" <?php if($class['grade'] == $i) echo 'selected'; ?>><?php echo format_grade($i); ?></option>
+                                <?php endfor; ?>
                             </select>
                         </div>
                         

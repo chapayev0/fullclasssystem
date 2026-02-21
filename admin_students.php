@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'db_connect.php';
+include 'helpers.php';
 
 // Check if admin
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
@@ -212,7 +213,7 @@ if ($result) {
                                             <div style="font-weight:600;"><?php echo htmlspecialchars($stu['first_name'] . ' ' . $stu['last_name']); ?></div>
                                             <div style="font-size:0.9rem; color:var(--primary);"><?php echo htmlspecialchars($stu['username']); ?></div>
                                         </td>
-                                        <td>Grade <?php echo htmlspecialchars($stu['grade']); ?></td>
+                                        <td><?php echo format_grade($stu['grade']); ?></td>
                                         <td>
                                             <?php echo htmlspecialchars($stu['phone']); ?>
                                             <?php if($stu['email']) echo '<br><small style="color:var(--gray);">' . htmlspecialchars($stu['email']) . '</small>'; ?>
@@ -265,7 +266,7 @@ if ($result) {
                         <div class="form-group">
                             <label class="form-label">Grade</label>
                             <select name="grade" class="form-control" required>
-                                <?php for($i=6; $i<=11; $i++) echo "<option value='$i'>Grade $i</option>"; ?>
+                                <?php for($i=6; $i<=13; $i++) echo "<option value='$i'>" . format_grade($i) . "</option>"; ?>
                             </select>
                         </div>
                         <div class="form-group">
