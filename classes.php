@@ -292,6 +292,9 @@ if ($subjects_result) {
                                 <span>|</span>
                                 <span>⏰ <?php echo date("g:i A", strtotime($c['start_time'])); ?></span>
                             </div>
+                            <div style="margin-top: 0.5rem; font-weight: 700; color: var(--primary); font-size: 1.1rem;">
+                                Rs. <?php echo number_format($c['fee'], 2); ?> / mo
+                            </div>
                         </div>
 
                         <a href="timetable.php?subject=<?php echo urlencode($c['subject']); ?>" class="btn-view">View Full Schedule</a>

@@ -36,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_class'])) {
     $class_day = $_POST['class_day'];
     $start_time = $_POST['start_time'];
     $end_time = $_POST['end_time'];
+    $fee = $_POST['fee'];
     $description = $_POST['description'];
     // Handle Logo Update
     $class_logo = $_POST['current_logo']; // Default to existing
@@ -82,8 +83,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_class'])) {
         // Let's just set it to '🏫' to satisfy the query, or remove it from query.
         // Removing from query is cleaner.
         
-        $stmt = $conn->prepare("UPDATE classes SET grade=?, subject=?, institute_phone=?, class_day=?, start_time=?, end_time=?, description=?, class_logo=? WHERE id=?");
-        $stmt->bind_param("issssssssi", $grade, $subject, $institute_phone, $class_day, $start_time, $end_time, $description, $class_logo, $class_id);
+        $stmt = $conn->prepare("UPDATE classes SET grade=?, subject=?, fee=?, institute_phone=?, class_day=?, start_time=?, end_time=?, description=?, class_logo=? WHERE id=?");
+        $stmt->bind_param("isdssssssi", $grade, $subject, $fee, $institute_phone, $class_day, $start_time, $end_time, $description, $class_logo, $class_id);
 
         if ($stmt->execute()) {
             $success_msg = "Class updated successfully!";
@@ -259,6 +260,11 @@ if (!$class) {
                         <div class="form-group">
                             <label class="form-label">Contact Phone Number</label>
                             <input type="text" name="institute_phone" class="form-control" value="<?php echo htmlspecialchars($class['institute_phone']); ?>" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Monthly Fee (Rs.)</label>
+                            <input type="number" name="fee" class="form-control" value="<?php echo htmlspecialchars($class['fee']); ?>" step="0.01" required>
                         </div>
                     </div>
                     

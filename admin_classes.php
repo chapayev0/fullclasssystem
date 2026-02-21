@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_class'])) {
     $class_day = $_POST['class_day'];
     $start_time = $_POST['start_time'];
     $end_time = $_POST['end_time'];
+    $fee = $_POST['fee'];
     $description = $_POST['description'];
     
     // Handle Logo
@@ -55,8 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_class'])) {
     if (empty($error_msg)) {
         $logo_emoji = '🏫'; 
 
-        $stmt = $conn->prepare("INSERT INTO classes (grade, subject, institute_phone, class_day, start_time, end_time, description, logo_emoji, class_logo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("issssssss", $grade, $subject, $institute_phone, $class_day, $start_time, $end_time, $description, $logo_emoji, $class_logo);
+        $stmt = $conn->prepare("INSERT INTO classes (grade, subject, fee, institute_phone, class_day, start_time, end_time, description, logo_emoji, class_logo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("isdsssssss", $grade, $subject, $fee, $institute_phone, $class_day, $start_time, $end_time, $description, $logo_emoji, $class_logo);
 
         if ($stmt->execute()) {
             $success_msg = "Class added successfully!";
@@ -293,6 +294,7 @@ if ($s_result) {
                         <thead>
                             <tr>
                                 <th>Grade & Image</th>
+                                <th>Fee</th>
                                 <th>Day & Time</th>
                                 <th>Contact</th>
                                 <th>Actions</th>
@@ -316,6 +318,9 @@ if ($s_result) {
                                                     <span style="font-size: 1.5rem;"><?php echo !empty($class['logo_emoji']) ? htmlspecialchars($class['logo_emoji']) : '🏫'; ?></span>
                                                 <?php endif; ?>
                                             </div>
+                                        </td>
+                                        <td>
+                                            <div style="font-weight: 700; color: var(--success);">Rs. <?php echo number_format($class['fee'], 2); ?></div>
                                         </td>
                                         <td>
                                             <div style="color: var(--primary); font-weight: 600;"><?php echo htmlspecialchars($class['class_day']); ?></div>
@@ -369,6 +374,11 @@ if ($s_result) {
                             <div class="form-group">
                                 <label class="form-label">Contact Phone Number</label>
                                 <input type="text" name="institute_phone" class="form-control" placeholder="e.g. +94 77 123 4567" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Monthly Fee (Rs.)</label>
+                                <input type="number" name="fee" class="form-control" placeholder="e.g. 2500" step="0.01" required>
                             </div>
                         </div>
                         
