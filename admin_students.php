@@ -162,7 +162,76 @@ if ($result) {
         .hidden { display: none; }
         .username-display { font-size: 1.2rem; font-weight: 800; color: var(--primary); }
         .section-title { grid-column: span 2; color: var(--primary); font-size: 1.1rem; font-weight: 700; margin-top: 1rem; margin-bottom: 0.5rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; }
+
+        /* ID Card Modal Styles */
+        .id-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.7);
+            z-index: 2000;
+            backdrop-filter: blur(8px);
+            align-items: center; justify-content: center;
+        }
+        .id-card-container {
+            background: white;
+            width: 380px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            position: relative;
+            animation: idCardPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes idCardPop {
+            from { transform: scale(0.8) translateY(20px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        .id-card-header {
+            background: linear-gradient(135deg, #0066FF, #7C3AED);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        .id-card-header h2 { margin: 0; font-size: 1.2rem; letter-spacing: 2px; text-transform: uppercase; opacity: 0.9; }
+        .id-card-header p { margin: 5px 0 0; font-size: 0.8rem; font-weight: 300; }
+        
+        .student-avatar {
+            width: 100px; height: 100px;
+            background: white;
+            border-radius: 50%;
+            margin: -50px auto 1rem;
+            border: 4px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 3rem; color: var(--primary);
+            position: relative; z-index: 2;
+        }
+
+        .id-card-body { padding: 1rem 2rem 2rem; text-align: center; }
+        .id-student-name { font-size: 1.4rem; font-weight: 800; color: var(--dark); margin-bottom: 0.5rem; }
+        .id-detail-row { display: flex; justify-content: space-between; margin-bottom: 0.8rem; font-size: 0.9rem; border-bottom: 1px dashed #e2e8f0; padding-bottom: 0.4rem; }
+        .id-label { color: var(--gray); font-weight: 600; }
+        .id-value { color: var(--dark); font-weight: 700; }
+
+        .qr-container { background: #f8fafc; padding: 1.5rem; margin-top: 1rem; border-radius: 12px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        #qrcode { padding: 10px; background: white; border-radius: 8px; }
+        .qr-label { font-size: 0.75rem; font-weight: 700; color: var(--gray); text-transform: uppercase; }
+
+        .btn-view-id { background: #F1F5F9; color: var(--primary); font-size: 0.85rem; padding: 0.5rem 1rem; margin-left: 0.5rem; }
+        .btn-view-id:hover { background: #E0F2FE; }
+        
+        .close-id-modal {
+            position: absolute;
+            top: 15px; right: 15px;
+            color: rgba(255,255,255,0.7);
+            cursor: pointer; font-size: 1.5rem;
+            z-index: 10;
+        }
+        .close-id-modal:hover { color: white; }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
     <?php include 'admin_sidebar.php'; ?>
@@ -223,12 +292,14 @@ if ($result) {
                                             <small style="color:var(--gray);"><?php echo htmlspecialchars($stu['parent_contact']); ?></small>
                                         </td>
                                         <td>
-                                            <div style="display:flex;">
-                                                <a href="admin_edit_student.php?id=<?php echo $stu['id']; ?>" class="btn btn-edit">Edit</a>
-                                                <form method="POST" onsubmit="return confirm('Deleting this student will ALSO delete their user account. Confirm?');">
+                                            <div style="display:flex; align-items: center; gap: 5px;">
+                                                <a href="admin_edit_student.php?id=<?php echo $stu['id']; ?>" class="btn btn-edit" style="margin: 0;">Edit</a>
+                                                <button type="button" class="btn btn-view-id" style="margin: 0;" onclick="showIDCard('<?php echo htmlspecialchars(addslashes($stu['first_name'] . ' ' . $stu['last_name'])); ?>', '<?php echo $stu['username']; ?>', '<?php echo $stu['phone']; ?>', '<?php echo format_grade($stu['grade']); ?>')">View ID</button>
+                                                <button type="button" class="btn" style="margin: 0; background: var(--secondary); padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="downloadStudentPDF('<?php echo htmlspecialchars(addslashes($stu['first_name'] . ' ' . $stu['last_name'])); ?>', '<?php echo $stu['username']; ?>', '<?php echo $stu['phone']; ?>', '<?php echo format_grade($stu['grade']); ?>')">Print ID</button>
+                                                <form method="POST" onsubmit="return confirm('Deleting this student will ALSO delete their user account. Confirm?');" style="margin: 0;">
                                                     <input type="hidden" name="student_id" value="<?php echo $stu['id']; ?>">
                                                     <input type="hidden" name="user_id" value="<?php echo $stu['u_id']; ?>">
-                                                    <button type="submit" name="delete_student" class="btn btn-danger">Delete</button>
+                                                    <button type="submit" name="delete_student" class="btn btn-danger" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Delete</button>
                                                 </form>
                                             </div>
                                         </td>
@@ -315,6 +386,43 @@ if ($result) {
             </div>
         </div>
     </div>
+
+    <!-- Student ID Card Modal -->
+    <div id="idCardModal" class="id-modal" onclick="closeIDCard(event)">
+        <div class="id-card-container" onclick="event.stopPropagation()">
+            <div class="close-id-modal" onclick="closeIDCard(event)">×</div>
+            <div id="printableCard">
+                <div class="id-card-header">
+                    <p>Digital Student ID</p>
+                    <h2>ICT WITH DILHARA</h2>
+                </div>
+                <div class="student-avatar">👤</div>
+                <div class="id-card-body">
+                    <div class="id-student-name" id="idName">Student Name</div>
+                    <div class="id-detail-row">
+                        <span class="id-label">ID Number</span>
+                        <span class="id-value" id="idNumber">ICT2024001</span>
+                    </div>
+                    <div class="id-detail-row">
+                        <span class="id-label">Phone</span>
+                        <span class="id-value" id="idPhone">077 123 4567</span>
+                    </div>
+                    <div class="id-detail-row">
+                        <span class="id-label">Grade</span>
+                        <span class="id-value" id="idGrade">Grade 10</span>
+                    </div>
+                    
+                    <div class="qr-container">
+                        <span class="qr-label">Scan to Verify</span>
+                        <div id="qrcode"></div>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 0 2rem 2rem;">
+                <p style="margin-top: 1rem; font-size: 0.7rem; color: var(--gray); text-align: center;">This is an electronically generated ID card, valid for active ICT with Dilhara sessions.</p>
+            </div>
+        </div>
+    </div>
     
     <script>
         function switchTab(tabName) {
@@ -324,8 +432,77 @@ if ($result) {
             
             const btns = document.querySelectorAll('.tab-btn');
             btns.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            if(event) event.target.classList.add('active');
         }
+
+        let qrCodeInstance = null;
+
+        function showIDCard(name, username, phone, grade) {
+            document.getElementById('idName').innerText = name;
+            document.getElementById('idNumber').innerText = username;
+            document.getElementById('idPhone').innerText = phone;
+            document.getElementById('idGrade').innerText = grade;
+            
+            const qrElement = document.getElementById('qrcode');
+            qrElement.innerHTML = ''; // Clear previous QR
+            
+            // Re-initialize Select2 or QR if needed
+            qrCodeInstance = new QRCode(qrElement, {
+                text: username,
+                width: 100,
+                height: 100,
+                colorDark : "#0F172A",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+
+            document.getElementById('idCardModal').style.display = 'flex';
+        }
+
+        function closeIDCard() {
+            document.getElementById('idCardModal').style.display = 'none';
+        }
+
+        function downloadStudentPDF(name, username, phone, grade) {
+            // Populate the card data first (even if modal is hidden)
+            document.getElementById('idName').innerText = name;
+            document.getElementById('idNumber').innerText = username;
+            document.getElementById('idPhone').innerText = phone;
+            document.getElementById('idGrade').innerText = grade;
+            
+            const qrElement = document.getElementById('qrcode');
+            qrElement.innerHTML = '';
+            new QRCode(qrElement, {
+                text: username,
+                width: 100, height: 100,
+                colorDark : "#0F172A",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+
+            // Wait a moment for QR to render then save
+            setTimeout(() => {
+                const element = document.getElementById('printableCard');
+                const studentId = username;
+                const studentName = name.replace(/\s+/g, '_');
+                
+                const opt = {
+                    margin:       0,
+                    filename:     `ID_${studentId}_${studentName}.pdf`,
+                    image:        { type: 'jpeg', quality: 0.98 },
+                    html2canvas:  { scale: 2, useCORS: true, letterRendering: true, backgroundColor: '#ffffff' },
+                    jsPDF:        { unit: 'in', format: [4, 6], orientation: 'portrait' },
+                    pagebreak:    { mode: 'avoid-all' }
+                };
+
+                html2pdf().set(opt).from(element).save();
+            }, 500);
+        }
+
+        // Close on escape
+        window.onkeydown = function(event) {
+            if (event.keyCode == 27) closeIDCard();
+        };
     </script>
 </body>
 </html>
