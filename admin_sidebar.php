@@ -19,6 +19,7 @@ function isActive($page) {
     <nav>
         <a href="admin_dashboard.php" class="nav-link <?php echo isActive('admin_dashboard.php'); ?>">Dashboard</a>
         <a href="admin_students.php" class="nav-link <?php echo isActive('admin_students.php'); echo isActive('admin_edit_student.php'); ?>">Students</a>
+        <a href="admin_assign_students.php" class="nav-link <?php echo isActive('admin_assign_students.php'); ?>">Assign Students</a>
         <a href="admin_classes.php" class="nav-link <?php echo isActive('admin_classes.php'); echo isActive('admin_edit_class.php'); ?>">Classes</a>
         <a href="admin_subjects.php" class="nav-link <?php echo isActive('admin_subjects.php'); echo isActive('admin_edit_subject.php'); ?>">Subjects</a>
         <a href="admin_teachers.php" class="nav-link <?php echo isActive('admin_teachers.php'); echo isActive('admin_edit_teacher.php'); ?>">Teachers</a>
