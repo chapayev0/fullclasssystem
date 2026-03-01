@@ -898,9 +898,6 @@
                 padding: 1rem;
             }
 
-            .product-card {
-                min-width: 280px;
-            }
 
             .dilhara-text .small-text {
                 font-size: 14vw;

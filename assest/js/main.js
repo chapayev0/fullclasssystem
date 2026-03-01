@@ -25,20 +25,6 @@ function currentSlide(index) {
 // Auto-advance slides every 5 seconds
 setInterval(nextSlide, 5000);
 
-// Product Carousel Functionality
-let scrollPosition = 0;
-const productsWrapper = document.getElementById('productsWrapper');
-const cardWidth = 370;
-
-function scrollProducts(direction) {
-    const maxScroll = -(cardWidth * (productsWrapper.children.length - 3));
-    scrollPosition += direction * cardWidth;
-
-    if (scrollPosition > 0) scrollPosition = 0;
-    if (scrollPosition < maxScroll) scrollPosition = maxScroll;
-
-    productsWrapper.style.transform = `translateX(${scrollPosition}px)`;
-}
 
 // Classes Carousel Functionality
 let classScrollPosition = 0;
@@ -274,14 +260,6 @@ document.addEventListener('DOMContentLoaded', function () {
         animateOnScroll.observe(card);
     });
 
-    // Product cards
-    const productCards = document.querySelectorAll('.product-card');
-    productCards.forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'scale(0.9) translateY(30px)';
-        card.style.transition = `all 0.6s ease ${index * 0.1}s`;
-        animateOnScroll.observe(card);
-    });
 
     // Contact tiles
     const contactTiles = document.querySelectorAll('.contact-tile');
@@ -404,7 +382,7 @@ if (logoTrack) {
 }
 
 // 7. 3D tilt effect on mouse move for cards
-document.querySelectorAll('.class-card, .product-card').forEach(card => {
+document.querySelectorAll('.class-card').forEach(card => {
     card.addEventListener('mousemove', function (e) {
         const rect = card.getBoundingClientRect();
         const x = e.clientX - rect.left;
