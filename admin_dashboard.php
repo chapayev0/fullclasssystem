@@ -12,6 +12,16 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 $total_students = $conn->query("SELECT COUNT(*) as count FROM students")->fetch_assoc()['count'];
 $total_classes = $conn->query("SELECT COUNT(*) as count FROM classes")->fetch_assoc()['count'];
 
+// 2. Income Calculations
+// Total Income (Sum of fees for all 'Paid' records)
+$total_income_res = $conn->query("SELECT SUM(c.fee) as total FROM fee_payments f JOIN classes c ON f.class_id = c.id WHERE f.status = 'Paid'");
+$total_income = $total_income_res->fetch_assoc()['total'] ?? 0;
+
+// Monthly Income (Sum of fees for 'Paid' records in the current month)
+$current_month = date('Y-m');
+$monthly_income_res = $conn->query("SELECT SUM(c.fee) as total FROM fee_payments f JOIN classes c ON f.class_id = c.id WHERE f.status = 'Paid' AND f.month_year = '$current_month'");
+$monthly_income = $monthly_income_res->fetch_assoc()['total'] ?? 0;
+
 $analytics = [];
 for ($i = 6; $i <= 11; $i++) {
     $analytics[$i] = [
@@ -143,6 +153,20 @@ while ($row = $stu_res->fetch_assoc()) {
                 <div class="stat-info">
                     <h3><?php echo $total_classes; ?></h3>
                     <p>Active Classes</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon icon-orange">💰</div>
+                <div class="stat-info">
+                    <h3>Rs. <?php echo number_format($monthly_income, 2); ?></h3>
+                    <p>Monthly Income</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon icon-purple">📈</div>
+                <div class="stat-info">
+                    <h3>Rs. <?php echo number_format($total_income, 2); ?></h3>
+                    <p>Total Income</p>
                 </div>
             </div>
         </div>
