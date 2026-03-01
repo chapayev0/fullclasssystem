@@ -13,14 +13,22 @@ $total_students = $conn->query("SELECT COUNT(*) as count FROM students")->fetch_
 $total_classes = $conn->query("SELECT COUNT(*) as count FROM classes")->fetch_assoc()['count'];
 
 // 2. Income Calculations
-// Total Income (Sum of fees for all 'Paid' records)
-$total_income_res = $conn->query("SELECT SUM(c.fee) as total FROM fee_payments f JOIN classes c ON f.class_id = c.id WHERE f.status = 'Paid'");
-$total_income = $total_income_res->fetch_assoc()['total'] ?? 0;
+// Fetch Share Settings
+$settings_res = $conn->query("SELECT setting_value FROM site_settings WHERE setting_key = 'teacher_share_percentage'");
+$teacher_share_pct = ($settings_res && $settings_res->num_rows > 0) ? intval($settings_res->fetch_assoc()['setting_value']) : 80;
+$inst_share_pct = 100 - $teacher_share_pct;
 
-// Monthly Income (Sum of fees for 'Paid' records in the current month)
+// Gross Totals
+$total_income_res = $conn->query("SELECT SUM(c.fee) as total FROM fee_payments f JOIN classes c ON f.class_id = c.id WHERE f.status = 'Paid'");
+$gross_total_income = $total_income_res->fetch_assoc()['total'] ?? 0;
+
 $current_month = date('Y-m');
 $monthly_income_res = $conn->query("SELECT SUM(c.fee) as total FROM fee_payments f JOIN classes c ON f.class_id = c.id WHERE f.status = 'Paid' AND f.month_year = '$current_month'");
-$monthly_income = $monthly_income_res->fetch_assoc()['total'] ?? 0;
+$gross_monthly_income = $monthly_income_res->fetch_assoc()['total'] ?? 0;
+
+// Institute's Share
+$inst_total_income = ($gross_total_income * $inst_share_pct) / 100;
+$inst_monthly_income = ($gross_monthly_income * $inst_share_pct) / 100;
 
 $analytics = [];
 for ($i = 6; $i <= 11; $i++) {
@@ -158,15 +166,15 @@ while ($row = $stu_res->fetch_assoc()) {
             <div class="stat-card">
                 <div class="stat-icon icon-orange">💰</div>
                 <div class="stat-info">
-                    <h3>Rs. <?php echo number_format($monthly_income, 2); ?></h3>
-                    <p>Monthly Income</p>
+                    <h3>Rs. <?php echo number_format($inst_monthly_income, 2); ?></h3>
+                    <p>Month Revenue (Inst.)</p>
                 </div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon icon-purple">📈</div>
                 <div class="stat-info">
-                    <h3>Rs. <?php echo number_format($total_income, 2); ?></h3>
-                    <p>Total Income</p>
+                    <h3>Rs. <?php echo number_format($inst_total_income, 2); ?></h3>
+                    <p>Total Revenue (Inst.)</p>
                 </div>
             </div>
         </div>

@@ -43,6 +43,37 @@ $stmt_count->bind_param("i", $teacher_id);
 $stmt_count->execute();
 $count_res = $stmt_count->get_result()->fetch_assoc();
 $student_count = $count_res['student_count'] ?? 0;
+
+// Fetch Share Settings
+$settings_res = $conn->query("SELECT setting_value FROM site_settings WHERE setting_key = 'teacher_share_percentage'");
+$teacher_share_pct = ($settings_res && $settings_res->num_rows > 0) ? intval($settings_res->fetch_assoc()['setting_value']) : 80;
+
+// Gross Totals for this teacher
+$current_month = date('Y-m');
+
+// Total Income (Gross)
+$sql_total = "SELECT SUM(c.fee) as total FROM fee_payments f 
+              JOIN classes c ON f.class_id = c.id 
+              JOIN subjects s ON c.subject = s.name
+              WHERE s.teacher_id = ? AND f.status = 'Paid'";
+$stmt_total = $conn->prepare($sql_total);
+$stmt_total->bind_param("i", $teacher_id);
+$stmt_total->execute();
+$gross_total = $stmt_total->get_result()->fetch_assoc()['total'] ?? 0;
+
+// Monthly Income (Gross)
+$sql_monthly = "SELECT SUM(c.fee) as total FROM fee_payments f 
+                JOIN classes c ON f.class_id = c.id 
+                JOIN subjects s ON c.subject = s.name
+                WHERE s.teacher_id = ? AND f.status = 'Paid' AND f.month_year = ?";
+$stmt_monthly = $conn->prepare($sql_monthly);
+$stmt_monthly->bind_param("is", $teacher_id, $current_month);
+$stmt_monthly->execute();
+$gross_monthly = $stmt_monthly->get_result()->fetch_assoc()['total'] ?? 0;
+
+// Teacher's Share
+$teacher_total_income = ($gross_total * $teacher_share_pct) / 100;
+$teacher_monthly_income = ($gross_monthly * $teacher_share_pct) / 100;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -287,6 +318,14 @@ $student_count = $count_res['student_count'] ?? 0;
                         <div class="stat-card">
                             <div class="stat-value"><?php echo $student_count; ?></div>
                             <div class="stat-label">Students</div>
+                        </div>
+                        <div class="stat-card" style="grid-column: span 2; background: #E0F2FE;">
+                            <div class="stat-label" style="color: var(--primary);">Monthly Earning</div>
+                            <div class="stat-value" style="font-size: 1.2rem;">Rs. <?php echo number_format($teacher_monthly_income, 2); ?></div>
+                        </div>
+                        <div class="stat-card" style="grid-column: span 2; background: #F3E8FF;">
+                            <div class="stat-label" style="color: var(--secondary);">Total Earning</div>
+                            <div class="stat-value" style="font-size: 1.2rem;">Rs. <?php echo number_format($teacher_total_income, 2); ?></div>
                         </div>
                     </div>
                 </div>

@@ -22,6 +22,7 @@ function isTeacherActive($page) {
         <a href="teacher_dashboard.php" class="nav-link <?php echo isTeacherActive('teacher_dashboard.php'); ?>">Dashboard</a>
         <a href="teacher_profile.php" class="nav-link <?php echo isTeacherActive('teacher_profile.php'); ?>">My Profile</a>
         <a href="teacher_classes.php" class="nav-link <?php echo isTeacherActive('teacher_classes.php'); ?>">My Classes</a>
+        <a href="teacher_finance.php" class="nav-link <?php echo isTeacherActive('teacher_finance.php'); ?>">Finance</a>
         <a href="teacher_messages.php" class="nav-link <?php echo isTeacherActive('teacher_messages.php'); ?>">Messages</a>
         <a href="#" onclick="openLogoutModal()" class="nav-link">Logout</a>
     </nav>
