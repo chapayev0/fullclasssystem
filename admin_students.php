@@ -232,6 +232,7 @@ if ($result) {
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://unpkg.com/html5-qrcode"></script>
 </head>
 <body>
     <?php include 'admin_sidebar.php'; ?>
@@ -260,6 +261,19 @@ if ($result) {
         
         <!-- View Tab -->
         <div id="view-tab">
+            <div class="card" style="margin-bottom: 1.5rem;">
+                <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 300px; position: relative;">
+                        <i class="fas fa-search" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--gray);"></i>
+                        <input type="text" id="studentSearch" class="form-control" placeholder="Search by name, username or grade..." style="padding-left: 2.8rem;">
+                    </div>
+                    <button id="qrSearchBtn" class="btn" style="background: var(--dark);">
+                        <i class="fas fa-qrcode"></i> Scan ID to View
+                    </button>
+                </div>
+                <div id="qrReader" style="width: 100%; max-width: 500px; margin: 1.5rem auto 0; display: none; border-radius: 12px; overflow: hidden;"></div>
+            </div>
+
             <div class="card">
                 <div class="table-container">
                     <table>
@@ -292,9 +306,10 @@ if ($result) {
                                             <small style="color:var(--gray);"><?php echo htmlspecialchars($stu['parent_contact']); ?></small>
                                         </td>
                                         <td>
-                                            <div style="display:flex; align-items: center; gap: 5px;">
-                                                <a href="admin_edit_student.php?id=<?php echo $stu['id']; ?>" class="btn btn-edit" style="margin: 0;">Edit</a>
-                                                <button type="button" class="btn btn-view-id" style="margin: 0;" onclick="showIDCard('<?php echo htmlspecialchars(addslashes($stu['first_name'] . ' ' . $stu['last_name'])); ?>', '<?php echo $stu['username']; ?>', '<?php echo $stu['phone']; ?>', '<?php echo format_grade($stu['grade']); ?>')">View ID</button>
+                                            <div style="display:flex; align-items: center; gap: 5px; flex-wrap: wrap;">
+                                                <button type="button" class="btn" style="background: var(--primary); padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="viewStudentFullDetails(<?php echo $stu['id']; ?>)">View</button>
+                                                <a href="admin_edit_student.php?id=<?php echo $stu['id']; ?>" class="btn btn-edit" style="margin: 0; padding: 0.5rem 1rem; font-size: 0.85rem;">Edit</a>
+                                                <button type="button" class="btn btn-view-id" style="margin: 0;" onclick="showIDCard('<?php echo htmlspecialchars(addslashes($stu['first_name'] . ' ' . $stu['last_name'])); ?>', '<?php echo $stu['username']; ?>', '<?php echo $stu['phone']; ?>', '<?php echo format_grade($stu['grade']); ?>')">ID</button>
                                                 <button type="button" class="btn" style="margin: 0; background: var(--secondary); padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="downloadStudentPDF('<?php echo htmlspecialchars(addslashes($stu['first_name'] . ' ' . $stu['last_name'])); ?>', '<?php echo $stu['username']; ?>', '<?php echo $stu['phone']; ?>', '<?php echo format_grade($stu['grade']); ?>')">Print ID</button>
                                                 <form method="POST" onsubmit="return confirm('Deleting this student will ALSO delete their user account. Confirm?');" style="margin: 0;">
                                                     <input type="hidden" name="student_id" value="<?php echo $stu['id']; ?>">
@@ -387,6 +402,49 @@ if ($result) {
         </div>
     </div>
 
+    <!-- Student Details Full Modal -->
+    <div id="studentDetailsModal" class="id-modal" onclick="closeDetailsModal(event)" style="background: rgba(15, 23, 42, 0.85);">
+        <div class="card" onclick="event.stopPropagation()" style="width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; padding: 0; position: relative;">
+            <div onclick="closeDetailsModal(event)" style="position: absolute; top: 1.5rem; right: 1.5rem; cursor: pointer; font-size: 1.5rem; color: var(--gray); z-index: 10;"><i class="fas fa-times"></i></div>
+            
+            <div style="background: var(--primary); padding: 3rem 2rem; color: white; text-align: center;">
+                <div style="width: 80px; height: 80px; background: rgba(255,255,255,0.2); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">👤</div>
+                <h2 id="detName" style="margin: 0;">Student Name</h2>
+                <p id="detUsername" style="opacity: 0.8; margin: 0.5rem 0 0;">username</p>
+            </div>
+
+            <div style="padding: 2rem;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+                    <div>
+                        <h4 style="color: var(--gray); text-transform: uppercase; font-size: 0.75rem; margin-bottom: 0.8rem;">Personal Information</h4>
+                        <div style="margin-bottom: 0.5rem;"><strong>Grade:</strong> <span id="detGrade">-</span></div>
+                        <div style="margin-bottom: 0.5rem;"><strong>DOB:</strong> <span id="detDob">-</span></div>
+                        <div style="margin-bottom: 0.5rem;"><strong>Phone:</strong> <span id="detPhone">-</span></div>
+                        <div style="margin-bottom: 0.5rem;"><strong>Email:</strong> <span id="detEmail">-</span></div>
+                        <div><strong>Address:</strong> <p id="detAddress" style="margin: 0.3rem 0; font-size: 0.9rem; color: var(--gray);">-</p></div>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--gray); text-transform: uppercase; font-size: 0.75rem; margin-bottom: 0.8rem;">Parental Info</h4>
+                        <div style="margin-bottom: 0.5rem;"><strong>Name:</strong> <span id="detParentName">-</span></div>
+                        <div style="margin-bottom: 0.5rem;"><strong>Contact:</strong> <span id="detParentPhone">-</span></div>
+                        <div style="margin-bottom: 0.5rem;"><strong>Rel.:</strong> <span id="detParentRel">-</span></div>
+                    </div>
+                </div>
+
+                <div style="border-top: 1px solid #e2e8f0; padding-top: 2rem;">
+                    <h4 style="color: var(--gray); text-transform: uppercase; font-size: 0.75rem; margin-bottom: 1rem;">Enrolled Classes</h4>
+                    <div id="detClassesList" style="display: grid; gap: 0.8rem;">
+                        <!-- Classes populated here -->
+                    </div>
+                </div>
+            </div>
+            
+            <div style="padding: 1.5rem; background: #f8fafc; text-align: right;">
+                <button class="btn" onclick="closeDetailsModal(event)">Close</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Student ID Card Modal -->
     <div id="idCardModal" class="id-modal" onclick="closeIDCard(event)">
         <div class="id-card-container" onclick="event.stopPropagation()">
@@ -425,6 +483,25 @@ if ($result) {
     </div>
     
     <script>
+        // 1. Search Functionality
+        const studentSearch = document.getElementById('studentSearch');
+        if (studentSearch) {
+            studentSearch.addEventListener('input', function() {
+                const query = this.value.toLowerCase();
+                const rows = document.querySelectorAll('tbody tr');
+                
+                rows.forEach(row => {
+                    const text = row.innerText.toLowerCase();
+                    if (text.includes(query)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        // 2. Tab Switching
         function switchTab(tabName) {
             document.getElementById('view-tab').classList.add('hidden');
             document.getElementById('add-tab').classList.add('hidden');
@@ -432,8 +509,120 @@ if ($result) {
             
             const btns = document.querySelectorAll('.tab-btn');
             btns.forEach(btn => btn.classList.remove('active'));
-            if(event) event.target.classList.add('active');
+            if(window.event && window.event.target.classList.contains('tab-btn')) {
+                window.event.target.classList.add('active');
+            } else {
+                // Find and activate the correct tab button manually
+                btns.forEach(btn => {
+                    if (btn.innerText.toLowerCase().includes(tabName)) btn.classList.add('active');
+                });
+            }
         }
+
+        // 3. QR Search
+        const qrSearchBtn = document.getElementById('qrSearchBtn');
+        const qrReader = document.getElementById('qrReader');
+        let html5QrcodeScanner = null;
+
+        if (qrSearchBtn) {
+            qrSearchBtn.addEventListener('click', function() {
+                if (qrReader.style.display === 'none' || qrReader.style.display === '') {
+                    qrReader.style.display = 'block';
+                    this.innerHTML = '<i class="fas fa-times"></i> Stop Scanning';
+                    this.style.background = 'var(--danger)';
+                    startQRScanner();
+                } else {
+                    stopQRScanner();
+                }
+            });
+        }
+
+        function startQRScanner() {
+            html5QrcodeScanner = new Html5QrcodeScanner("qrReader", { fps: 10, qrbox: 250 });
+            html5QrcodeScanner.render((decodedText) => {
+                stopQRScanner();
+                viewStudentByUsername(decodedText);
+            });
+        }
+
+        function stopQRScanner() {
+            qrReader.style.display = 'none';
+            qrSearchBtn.innerHTML = '<i class="fas fa-qrcode"></i> Scan ID to View';
+            qrSearchBtn.style.background = 'var(--dark)';
+            if (html5QrcodeScanner) {
+                html5QrcodeScanner.clear().catch(error => { console.error("Failed to clear scanner", error); });
+            }
+        }
+
+        // 4. Detailed View
+        function viewStudentFullDetails(studentId) {
+            fetch(`api_student_details.php?student_id=${studentId}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.error) throw new Error(data.error);
+                    populateDetailsModal(data);
+                })
+                .catch(err => alert("Error loading details: " + err));
+        }
+
+        function viewStudentByUsername(username) {
+            fetch(`api_student_details.php?username=${username}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.error) throw new Error(data.error);
+                    populateDetailsModal(data);
+                })
+                .catch(err => alert("Student lookup failed: " + err.message));
+        }
+
+        function populateDetailsModal(data) {
+            const s = data.student;
+            document.getElementById('detName').innerText = `${s.first_name} ${s.last_name}`;
+            document.getElementById('detUsername').innerText = s.username;
+            document.getElementById('detGrade').innerText = s.grade;
+            document.getElementById('detDob').innerText = s.dob;
+            document.getElementById('detPhone').innerText = s.phone;
+            document.getElementById('detEmail').innerText = s.email || 'N/A';
+            document.getElementById('detAddress').innerText = s.address;
+            document.getElementById('detParentName').innerText = s.parent_name;
+            document.getElementById('detParentPhone').innerText = s.parent_contact;
+            document.getElementById('detParentRel').innerText = s.parent_relationship;
+            
+            const classesList = document.getElementById('detClassesList');
+            classesList.innerHTML = '';
+            
+            if (data.classes.length === 0) {
+                classesList.innerHTML = '<p style="color: var(--gray); font-style: italic;">No classes enrolled yet.</p>';
+            } else {
+                data.classes.forEach(c => {
+                    const row = document.createElement('div');
+                    row.style.background = '#f8fafc';
+                    row.style.padding = '0.8rem 1.2rem';
+                    row.style.borderRadius = '8px';
+                    row.style.display = 'flex';
+                    row.style.justifyContent = 'space-between';
+                    row.style.alignItems = 'center';
+                    row.innerHTML = `
+                        <div>
+                            <div style="font-weight: 700; color: var(--dark);">${c.subject}</div>
+                            <div style="font-size: 0.8rem; color: var(--gray);">Grade ${c.grade}</div>
+                        </div>
+                        <div style="text-align: right; font-size: 0.85rem; color: var(--primary); font-weight: 600;">
+                            ${c.schedule_day}<br>${c.schedule_time}
+                        </div>
+                    `;
+                    classesList.appendChild(row);
+                });
+            }
+            
+            document.getElementById('studentDetailsModal').style.display = 'flex';
+        }
+
+        function closeDetailsModal(e) {
+            document.getElementById('studentDetailsModal').style.display = 'none';
+        }
+
+        // 5. ID Card existing functionality (kept same but moved into object/scope if needed, here it stays global)
 
         let qrCodeInstance = null;
 
