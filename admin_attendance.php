@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_attendance'])) {
             $s_id = $enrollment['student_id'];
             
             // Handle Attendance
-            $status = isset($attendance_data[$s_id]) ? 'Present' : 'Absent';
+            $status = (isset($attendance_data[$s_id]) && $attendance_data[$s_id] === 'Absent') ? 'Absent' : 'Present';
             $stmt = $conn->prepare("INSERT INTO attendance (student_id, class_id, date, status) 
                                    VALUES (?, ?, ?, ?) 
                                    ON DUPLICATE KEY UPDATE status = VALUES(status), marked_at = CURRENT_TIMESTAMP");
@@ -205,6 +205,52 @@ if ($active_tab === 'mark' && $selected_class) {
         .stat-label { color: var(--gray); font-size: 0.9rem; font-weight: 600; }
 
         .attendance-checkbox { width: 22px; height: 22px; cursor: pointer; accent-color: var(--success); }
+        
+        /* Radio Toggle Styles */
+        .attendance-toggle-group {
+            display: flex;
+            background: #f1f5f9;
+            padding: 4px;
+            border-radius: 8px;
+            width: fit-content;
+            gap: 4px;
+        }
+        .attendance-toggle-item {
+            position: relative;
+            flex: 1;
+        }
+        .attendance-toggle-item input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .attendance-toggle-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            color: var(--gray);
+        }
+        .toggle-present input:checked + .attendance-toggle-label {
+            background: var(--success);
+            color: white;
+            box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+        }
+        .toggle-absent input:checked + .attendance-toggle-label {
+            background: var(--danger);
+            color: white;
+            box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
+        }
+        .attendance-toggle-label:hover {
+            background: #e2e8f0;
+        }
         .alert { padding: 1rem; border-radius: 8px; margin-bottom: 2rem; font-weight: 600; }
         .alert-success { background: #D1FAE5; color: #065F46; }
         .alert-error { background: #FEE2E2; color: #991B1B; }
@@ -278,8 +324,8 @@ if ($active_tab === 'mark' && $selected_class) {
                         <table>
                             <thead>
                                 <tr>
-                                    <th style="width: 50px;">
-                                        <input type="checkbox" id="selectAll" style="width: 18px; height: 18px; cursor: pointer;">
+                                    <th style="width: 120px;">
+                                        <button type="button" id="markAllPresent" class="btn" style="padding: 0.4rem 0.8rem; font-size: 0.75rem;"><i class="fas fa-check-double"></i> All P</button>
                                     </th>
                                     <th>Student Name</th>
                                     <th>Student ID</th>
@@ -293,12 +339,25 @@ if ($active_tab === 'mark' && $selected_class) {
                                 <?php else: ?>
                                     <?php foreach ($students as $s): ?>
                                         <tr>
-                                            <td><input type="checkbox" name="attendance[<?php echo $s['id']; ?>]" class="attendance-checkbox" value="Present" <?php echo ($s['status'] === 'Present') ? 'checked' : ''; ?> id="stu_<?php echo $s['username']; ?>"></td>
+                                            <td>
+                                                <div class="attendance-toggle-group">
+                                                    <div class="attendance-toggle-item toggle-present">
+                                                        <input type="radio" name="attendance[<?php echo $s['id']; ?>]" value="Present" id="pres_<?php echo $s['id']; ?>" class="attendance-radio present-radio" <?php echo ($s['status'] === 'Present') ? 'checked' : ''; ?>>
+                                                        <label for="pres_<?php echo $s['id']; ?>" class="attendance-toggle-label" title="Present">P</label>
+                                                    </div>
+                                                    <div class="attendance-toggle-item toggle-absent">
+                                                        <input type="radio" name="attendance[<?php echo $s['id']; ?>]" value="Absent" id="abs_<?php echo $s['id']; ?>" class="attendance-radio absent-radio" <?php echo ($s['status'] === 'Absent') ? 'checked' : ''; ?> id="stu_<?php echo $s['username']; ?>">
+                                                        <label for="abs_<?php echo $s['id']; ?>" class="attendance-toggle-label" title="Absent">A</label>
+                                                    </div>
+                                                </div>
+                                            </td>
                                             <td><div style="font-weight: 600;"><?php echo htmlspecialchars($s['first_name'] . ' ' . $s['last_name']); ?></div></td>
                                             <td><code style="background: var(--light); padding: 2px 6px; border-radius: 4px;"><?php echo htmlspecialchars($s['username']); ?></code></td>
                                             <td>
                                                 <?php if ($s['status'] === 'Present'): ?>
                                                     <span style="color: var(--success); font-weight: 600;"><i class="fas fa-check-circle"></i> Present</span>
+                                                <?php elseif ($s['status'] === 'Absent'): ?>
+                                                    <span style="color: var(--danger); font-weight: 600;"><i class="fas fa-times-circle"></i> Absent</span>
                                                 <?php else: ?>
                                                     <span style="color: var(--gray); font-size: 0.9rem;">Not Marked</span>
                                                 <?php endif; ?>
@@ -408,10 +467,12 @@ if ($active_tab === 'mark' && $selected_class) {
     <!-- Scripts (QRScanner logic remains same) -->
     <script src="https://unpkg.com/html5-qrcode"></script>
     <script>
-        const selectAll = document.getElementById('selectAll');
-        if (selectAll) { selectAll.addEventListener('change', function() { 
-            document.querySelectorAll('.attendance-checkbox').forEach(cb => cb.checked = this.checked); 
-        }); }
+        const markAllPresent = document.getElementById('markAllPresent');
+        if (markAllPresent) { 
+            markAllPresent.addEventListener('click', function() { 
+                document.querySelectorAll('.present-radio').forEach(radio => radio.checked = true); 
+            }); 
+        }
         const qrToggle = document.getElementById('qrToggle');
         const reader = document.getElementById('reader');
         let html5QrcodeScanner = null;
@@ -426,9 +487,18 @@ if ($active_tab === 'mark' && $selected_class) {
         }); }
         function startScanner() { html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 }); html5QrcodeScanner.render(onScanSuccess); }
         function onScanSuccess(decodedText, decodedResult) {
-            const checkbox = document.getElementById('stu_' + decodedText);
-            if (checkbox) { if (!checkbox.checked) { checkbox.checked = true; checkbox.closest('tr').style.backgroundColor = '#ecfdf5'; } }
-            else { alert('Student with ID ' + decodedText + ' not found.'); }
+            const radioPresent = document.querySelector(`.present-radio[id^="pres_"]`); // This needs a better selector if we had ID mapping in JS
+            // Let's refine the scan success to handle the radio button if we can find the student row
+            const rows = document.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                if (row.querySelector('code').textContent.trim() === decodedText.trim()) {
+                    const presRadio = row.querySelector('.present-radio');
+                    if (presRadio) {
+                        presRadio.checked = true;
+                        row.style.backgroundColor = '#ecfdf5';
+                    }
+                }
+            });
         }
     </script>
 </body>
