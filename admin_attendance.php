@@ -76,7 +76,7 @@ $records = [];
 $stats = ['present' => 0, 'absent' => 0, 'total' => 0];
 
 if ($active_tab === 'records' && ($record_class > 0 || !empty($start_date))) {
-    $r_sql = "SELECT a.*, s.first_name, s.last_name, u.username, c.subject, c.grade, fp.status as fee_status 
+    $r_sql = "SELECT a.*, s.first_name, s.last_name, u.username, c.subject, c.grade, fp.status as fee_status, DATE_FORMAT(a.date, '%M %Y') as month_year 
               FROM attendance a 
               JOIN students s ON a.student_id = s.id 
               JOIN users u ON s.user_id = u.id
