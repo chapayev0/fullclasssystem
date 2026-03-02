@@ -112,4 +112,26 @@ function format_grade($grade) {
     }
     return "Grade $grade";
 }
+
+/**
+ * Get a site setting from the database.
+ * @param string $key The setting key.
+ * @param string $default Default value if setting is not found.
+ * @return string The setting value.
+ */
+function get_site_setting($key, $default = '') {
+    global $conn;
+    if (!isset($conn)) {
+        include_once 'db_connect.php';
+    }
+    
+    $stmt = $conn->prepare("SELECT setting_value FROM site_settings WHERE setting_key = ?");
+    $stmt->bind_param("s", $key);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($row = $result->fetch_assoc()) {
+        return $row['setting_value'];
+    }
+    return $default;
+}
 ?>

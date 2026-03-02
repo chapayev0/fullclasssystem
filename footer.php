@@ -2,9 +2,9 @@
         <div class="footer-content">
             <div class="footer-brand">
             <div >
-                <img src="assest/logo/logo1.png" alt="ICT with Dilhara Logo" style="height: 70px;">
+                <img src="<?php echo htmlspecialchars(get_site_setting('site_logo', 'assest/logo/logo1.png')); ?>" alt="Logo" style="height: 70px;">
             </div>
-                <p>Sri Lanka's leading ICT education academy, committed to nurturing digital excellence and empowering students to excel in technology.</p>
+                <p><?php echo htmlspecialchars(get_site_setting('institute_name', 'ICT with Dilhara')); ?> - Sri Lanka's leading ICT education academy, committed to nurturing digital excellence and empowering students to excel in technology.</p>
                 <div class="social-links">
                     <a href="https://web.facebook.com/profile.php?id=61585798923049" target="_blank" class="social-link" title="Facebook">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/></svg>
@@ -44,16 +44,16 @@
             <div class="footer-section">
                 <h4>Contact Us</h4>
                 <ul class="footer-links">
-                    <li>📍 Embilipitiya</li>
-                    <li>📞 0777 695 130</li>
-                    <li>💬 0777 695 130 (WhatsApp)</li>
-                    <li>📧 <a href="mailto:sdilhara544@gmail.com">sdilhara544@gmail.com</a></li>
+                    <li>📍 <?php echo htmlspecialchars(get_site_setting('site_address', 'Embilipitiya')); ?></li>
+                    <li>📞 <?php echo htmlspecialchars(get_site_setting('site_phone', '0777 695 130')); ?></li>
+                    <li>💬 <?php echo htmlspecialchars(get_site_setting('site_phone', '0777 695 130')); ?> (WhatsApp)</li>
+                    <li>📧 <a href="mailto:<?php echo htmlspecialchars(get_site_setting('site_email', 'sdilhara544@gmail.com')); ?>"><?php echo htmlspecialchars(get_site_setting('site_email', 'sdilhara544@gmail.com')); ?></a></li>
                     <li>⏰ Mon-Sat: 8AM - 8PM</li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 ICT with Dilhara. All rights reserved. | Designed with passion for education</p>
+            <p>&copy; <?php echo date('Y'); ?> <?php echo htmlspecialchars(get_site_setting('institute_name', 'ICT with Dilhara')); ?>. All rights reserved. | Designed with passion for education</p>
         </div>
         
         <!-- Back to Top Button -->

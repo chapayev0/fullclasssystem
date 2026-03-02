@@ -5,8 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ICT with Dilhara ICT Academy | Excellence in Digital Education</title>
-    <link rel="icon" type="image/png" href="assest/logo/logo1.png">
+    <title><?php echo htmlspecialchars(get_site_setting('institute_name', 'ICT with Dilhara')); ?> | Excellence in Digital Education</title>
+    <link rel="icon" type="image/png" href="<?php echo htmlspecialchars(get_site_setting('site_logo', 'assest/logo/logo1.png')); ?>">
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap"
         rel="stylesheet">
@@ -724,7 +724,8 @@
             margin-top: 0.5rem;
         }
 
-        /* ICT with Dilhara Section */
+        /* <?php echo htmlspecialchars(get_site_setting('institute_name', 'ICT with Dilhara')); ?>
+ Section */
         .dilhara-section {
             display: flex;
             flex-direction: column;
@@ -1402,7 +1403,8 @@
         <div class="testimonials-grid">
             <div class="testimonial-card">
                 <div class="quote-icon">"</div>
-                <p class="testimonial-text">ICT with Dilhara Academy transformed my understanding of ICT. The teachers
+                <p class="testimonial-text"><?php echo htmlspecialchars(get_site_setting('institute_name', 'ICT with Dilhara')); ?>
+ Academy transformed my understanding of ICT. The teachers
                     are amazing and the materials are comprehensive. I scored an A in my O/Levels!</p>
                 <div class="testimonial-author">
                     <div class="author-avatar">AS</div>
@@ -1442,7 +1444,8 @@
         </div>
     </section>
 
-    <!-- ICT with Dilhara Section -->
+    <!-- <?php echo htmlspecialchars(get_site_setting('institute_name', 'ICT with Dilhara')); ?>
+ Section -->
     <?php include 'ict_section.php'; ?>
 
     <!-- Footer -->

@@ -68,7 +68,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Registration | ICT with Dilhara</title>
+    <title>Student Registration | <?php echo htmlspecialchars(get_site_setting('institute_name', 'ICT with Dilhara')); ?>
+</title>
     <link rel="icon" type="image/png" href="assest/logo/logo1.png">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -103,7 +104,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="card">
         <div class="logo">
-            <img src="assest/logo/logo1.png" alt="ICT with Dilhara Logo">
+            <img src="assest/logo/logo1.png" alt="<?php echo htmlspecialchars(get_site_setting('institute_name', 'ICT with Dilhara')); ?>
+ Logo">
         </div>
         <h2>Student Registration</h2>
         

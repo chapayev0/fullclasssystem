@@ -1,4 +1,8 @@
-<?php $current_page = basename($_SERVER['PHP_SELF']); ?>
+<?php 
+$current_page = basename($_SERVER['PHP_SELF']); 
+$site_logo = get_site_setting('site_logo', 'assest/logo/logo1.png');
+$inst_name = get_site_setting('institute_name', 'ICT with Dilhara');
+?>
 <style>
     /* Navbar Styles */
     .navbar {
@@ -285,7 +289,12 @@
 <nav class="navbar">
     <div class="navbar-container">
         <div class="logo">
-            <img src="assest/logo/logo1.png" alt="ICT with Dilhara Logo" style="height: 50px;">
+            <a href="index.php" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+                <?php if ($site_logo): ?>
+                    <img src="<?php echo htmlspecialchars($site_logo); ?>" alt="Logo" style="height: 50px;">
+                <?php endif; ?>
+                <span><?php echo htmlspecialchars($inst_name); ?></span>
+            </a>
         </div>
         
         <button class="mobile-menu-btn" onclick="toggleNav()">
