@@ -126,6 +126,67 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_about_settings
     $success_msg = "About page settings updated successfully!";
 }
 
+// Handle Hero Slider Settings Update
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_hero_settings'])) {
+    $hero_data = [];
+    for ($i = 1; $i <= 3; $i++) {
+        $hero_data["hero_slide_{$i}_title"] = $_POST["hero_slide_{$i}_title"];
+        $hero_data["hero_slide_{$i}_desc"] = $_POST["hero_slide_{$i}_desc"];
+        $hero_data["hero_slide_{$i}_btn_text"] = $_POST["hero_slide_{$i}_btn_text"];
+        $hero_data["hero_slide_{$i}_btn_action"] = $_POST["hero_slide_{$i}_btn_action"];
+        $hero_data["hero_slide_{$i}_btn_enabled"] = isset($_POST["hero_slide_{$i}_btn_enabled"]) ? '1' : '0';
+        $hero_data["hero_slide_{$i}_overlay_color"] = $_POST["hero_slide_{$i}_overlay_color"];
+        $hero_data["hero_slide_{$i}_overlay_opacity"] = $_POST["hero_slide_{$i}_overlay_opacity"];
+        $hero_data["hero_slide_{$i}_title_color"] = $_POST["hero_slide_{$i}_title_color"];
+        $hero_data["hero_slide_{$i}_title_size"] = $_POST["hero_slide_{$i}_title_size"];
+        $hero_data["hero_slide_{$i}_desc_color"] = $_POST["hero_slide_{$i}_desc_color"];
+        $hero_data["hero_slide_{$i}_desc_size"] = $_POST["hero_slide_{$i}_desc_size"];
+    }
+
+    foreach ($hero_data as $key => $val) {
+        $stmt = $conn->prepare("UPDATE site_settings SET setting_value = ? WHERE setting_key = ?");
+        $stmt->bind_param("ss", $val, $key);
+        $stmt->execute();
+        
+        if ($stmt->affected_rows === 0) {
+            $check = $conn->prepare("SELECT setting_key FROM site_settings WHERE setting_key = ?");
+            $check->bind_param("s", $key);
+            $check->execute();
+            if ($check->get_result()->num_rows === 0) {
+                $ins = $conn->prepare("INSERT INTO site_settings (setting_key, setting_value) VALUES (?, ?)");
+                $ins->bind_param("ss", $key, $val);
+                $ins->execute();
+            }
+        }
+    }
+
+    // Handle Hero Slide Background Images
+    for ($i = 1; $i <= 3; $i++) {
+        if (isset($_FILES["hero_slide_{$i}_bg"]) && $_FILES["hero_slide_{$i}_bg"]['error'] === UPLOAD_ERR_OK) {
+            $upload_dir = 'uploads/site/';
+            if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
+            
+            $file_ext = pathinfo($_FILES["hero_slide_{$i}_bg"]['name'], PATHINFO_EXTENSION);
+            $file_name = "hero_bg_{$i}_" . time() . '.' . $file_ext;
+            $target_file = $upload_dir . $file_name;
+            
+            if (move_uploaded_file($_FILES["hero_slide_{$i}_bg"]['tmp_name'], $target_file)) {
+                $key = "hero_slide_{$i}_bg";
+                $stmt = $conn->prepare("UPDATE site_settings SET setting_value = ? WHERE setting_key = ?");
+                $stmt->bind_param("ss", $target_file, $key);
+                $stmt->execute();
+                if ($stmt->affected_rows === 0) {
+                    $ins = $conn->prepare("INSERT INTO site_settings (setting_key, setting_value) VALUES (?, ?)");
+                    $ins->bind_param("ss", $key, $target_file);
+                    $ins->execute();
+                }
+            }
+        }
+    }
+
+    $success_msg = "Hero slider settings updated successfully!";
+}
+
 // Fetch Current Settings
 $settings = [];
 $res = $conn->query("SELECT * FROM site_settings");
@@ -274,6 +335,89 @@ $site_address = $settings['site_address'] ?? '';
                 </div>
 
                 <button type="submit" name="update_about_settings" class="btn">Save About Settings</button>
+            </form>
+        </div>
+
+        <div class="card" style="max-width: 1000px;">
+            <h2 class="section-title">Hero Section Slider</h2>
+            <form method="POST" enctype="multipart/form-data">
+                <?php for ($i = 1; $i <= 3; $i++): ?>
+                    <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; border: 1px solid #e2e8f0;">
+                        <h3 style="margin-top: 0; color: var(--primary); border-bottom: 2px solid var(--primary); display: inline-block; padding-bottom: 5px;">Slide <?php echo $i; ?></h3>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Background Image</label>
+                                <?php if (isset($settings["hero_slide_{$i}_bg"])): ?>
+                                    <img src="<?php echo htmlspecialchars($settings["hero_slide_{$i}_bg"]); ?>" class="logo-preview" style="width: 100%; height: 100px; object-fit: cover;">
+                                <?php endif; ?>
+                                <input type="file" name="hero_slide_<?php echo $i; ?>_bg" class="form-control" accept="image/*">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Overlay & Opacity</label>
+                                <div style="display: flex; gap: 10px; align-items: center;">
+                                    <input type="color" name="hero_slide_<?php echo $i; ?>_overlay_color" class="form-control" style="width: 50px; padding: 2px; height: 40px;" value="<?php echo htmlspecialchars($settings["hero_slide_{$i}_overlay_color"] ?? '#ffffff'); ?>">
+                                    <input type="range" name="hero_slide_<?php echo $i; ?>_overlay_opacity" min="0" max="1" step="0.1" class="form-control" style="flex: 1;" value="<?php echo htmlspecialchars($settings["hero_slide_{$i}_overlay_opacity"] ?? '0.9'); ?>">
+                                </div>
+                                <small>Adjust overlay color and transparency</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Title Text</label>
+                            <div style="display: flex; gap: 10px;">
+                                <input type="text" name="hero_slide_<?php echo $i; ?>_title" class="form-control" style="flex: 3;" value="<?php 
+                                    $default_titles = [1 => 'Master ICT Skills for the Digital Future', 2 => 'Learn from Industry Experts', 3 => 'Flexible Online & Physical Classes'];
+                                    echo htmlspecialchars($settings["hero_slide_{$i}_title"] ?? $default_titles[$i]); 
+                                ?>" required>
+                                <input type="color" name="hero_slide_<?php echo $i; ?>_title_color" class="form-control" style="width: 50px; padding: 2px; height: 44px;" value="<?php echo htmlspecialchars($settings["hero_slide_{$i}_title_color"] ?? '#000000'); ?>">
+                                <input type="text" name="hero_slide_<?php echo $i; ?>_title_size" class="form-control" style="width: 80px;" value="<?php echo htmlspecialchars($settings["hero_slide_{$i}_title_size"] ?? '4rem'); ?>" placeholder="Size (e.g. 4rem)">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Description Text</label>
+                            <div style="display: flex; gap: 10px; align-items: flex-start;">
+                                <textarea name="hero_slide_<?php echo $i; ?>_desc" class="form-control" style="flex: 3;" rows="2" required><?php 
+                                    $default_descs = [
+                                        1 => 'Join Sri Lanka\'s premier ICT academy and unlock your potential with expert guidance and comprehensive curriculum',
+                                        2 => 'Our experienced instructors bring real-world knowledge to help you excel in O/L ICT examinations',
+                                        3 => 'Choose your learning path with our hybrid model - attend in person or join from anywhere in Sri Lanka'
+                                    ];
+                                    echo htmlspecialchars($settings["hero_slide_{$i}_desc"] ?? $default_descs[$i]); 
+                                ?></textarea>
+                                <div style="display: flex; flex-direction: column; gap: 5px;">
+                                    <input type="color" name="hero_slide_<?php echo $i; ?>_desc_color" class="form-control" style="width: 50px; padding: 2px; height: 40px;" value="<?php echo htmlspecialchars($settings["hero_slide_{$i}_desc_color"] ?? '#6B7280'); ?>">
+                                    <input type="text" name="hero_slide_<?php echo $i; ?>_desc_size" class="form-control" style="width: 80px;" value="<?php echo htmlspecialchars($settings["hero_slide_{$i}_desc_size"] ?? '1.3rem'); ?>" placeholder="Size (e.g. 1.3rem)">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Button Settings</label>
+                                <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 10px;">
+                                    <input type="checkbox" name="hero_slide_<?php echo $i; ?>_btn_enabled" value="1" <?php echo ($settings["hero_slide_{$i}_btn_enabled"] ?? '1') == '1' ? 'checked' : ''; ?>>
+                                    <span>Enable Button</span>
+                                </div>
+                                <input type="text" name="hero_slide_<?php echo $i; ?>_btn_text" class="form-control" value="<?php 
+                                    $default_btns = [1 => 'Explore Classes', 2 => 'Meet Our Team', 3 => 'Join Online'];
+                                    echo htmlspecialchars($settings["hero_slide_{$i}_btn_text"] ?? $default_btns[$i]); 
+                                ?>" placeholder="Button Text">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Button Action</label>
+                                <div style="height: 32px;"></div> <!-- Spacer -->
+                                <input type="text" name="hero_slide_<?php echo $i; ?>_btn_action" class="form-control" value="<?php 
+                                    $default_actions = [1 => '#classes', 2 => 'teachers.php', 3 => 'javascript:openJoinModal()'];
+                                    echo htmlspecialchars($settings["hero_slide_{$i}_btn_action"] ?? $default_actions[$i]); 
+                                ?>" placeholder="Link or JS">
+                            </div>
+                        </div>
+                    </div>
+                <?php endfor; ?>
+
+                <button type="submit" name="update_hero_settings" class="btn" style="width: 100%; padding: 1.2rem; font-size: 1.1rem; margin-top: 1rem;">Save Advanced Hero Settings</button>
             </form>
         </div>
 

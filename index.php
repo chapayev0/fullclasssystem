@@ -345,20 +345,7 @@
             opacity: 1;
         }
 
-        .slide-1 {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 248, 251, 0.98)),
-                url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect fill="%23F8F8FB" width="100" height="100"/><circle cx="50" cy="50" r="30" fill="%23E5E5E8" opacity="0.5"/></svg>');
-        }
-
-        .slide-2 {
-            background: linear-gradient(135deg, rgba(248, 248, 251, 0.98), rgba(255, 255, 255, 0.98)),
-                url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect fill="%23FFFFFF" width="100" height="100"/><polygon points="50,20 90,80 10,80" fill="%23F8F8FB" opacity="0.5"/></svg>');
-        }
-
-        .slide-3 {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(243, 244, 246, 0.98)),
-                url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect fill="%23F3F4F6" width="100" height="100"/><rect x="20" y="20" width="60" height="60" fill="%23E5E7EB" opacity="0.5"/></svg>');
-        }
+        /* Slide specific background and overlay will be handled dynamically in the section */
 
         .slide-content {
             position: absolute;
@@ -929,31 +916,64 @@
 
     <!-- Hero Section with Slider -->
     <section class="hero-section" id="home">
+        <style>
+            <?php for ($i = 1; $i <= 3; $i++): 
+                $bg = get_site_setting("hero_slide_{$i}_bg", "");
+                $ov_color = get_site_setting("hero_slide_{$i}_overlay_color", "#ffffff");
+                $ov_opacity = get_site_setting("hero_slide_{$i}_overlay_opacity", "0.9");
+                
+                // Helper to convert hex to rgba
+                list($r, $g, $b) = sscanf($ov_color, "#%02x%02x%02x");
+                $rgba = "rgba($r, $g, $b, $ov_opacity)";
+                
+                $bg_url = $bg ? "url('$bg')" : "url('data:image/svg+xml,<svg width=\"100\" height=\"100\" xmlns=\"http://www.w3.org/2000/svg\"><rect fill=\"%23F3F4F6\" width=\"100\" height=\"100\"/><rect x=\"20\" y=\"20\" width=\"60\" height=\"60\" fill=\"%23E5E7EB\" opacity=\"0.5\"/></svg>')";
+            ?>
+            .slide-<?php echo $i; ?> {
+                background: linear-gradient(135deg, <?php echo $rgba; ?>, <?php echo $rgba; ?>), <?php echo $bg_url; ?>;
+            }
+            .slide-<?php echo $i; ?> .slide-title {
+                color: <?php echo get_site_setting("hero_slide_{$i}_title_color", "var(--primary)"); ?>;
+                font-size: <?php echo get_site_setting("hero_slide_{$i}_title_size", "4rem"); ?>;
+            }
+            .slide-<?php echo $i; ?> .slide-description {
+                color: <?php echo get_site_setting("hero_slide_{$i}_desc_color", "var(--gray)"); ?>;
+                font-size: <?php echo get_site_setting("hero_slide_{$i}_desc_size", "1.3rem"); ?>;
+            }
+            <?php endfor; ?>
+        </style>
+
         <div class="hero-slider">
-            <div class="slide slide-1 active">
-                <div class="slide-content">
-                    <h1 class="slide-title">Master ICT Skills for the Digital Future</h1>
-                    <p class="slide-description">Join Sri Lanka's premier ICT academy and unlock your potential with
-                        expert guidance and comprehensive curriculum</p>
-                    <button class="btn btn-primary slide-btn">Explore Classes</button>
+            <?php 
+            $default_hero = [
+                1 => ['title' => 'Master ICT Skills for the Digital Future', 'desc' => 'Join Sri Lanka\'s premier ICT academy and unlock your potential with expert guidance and comprehensive curriculum', 'btn' => 'Explore Classes', 'action' => '#classes'],
+                2 => ['title' => 'Learn from Industry Experts', 'desc' => 'Our experienced instructors bring real-world knowledge to help you excel in O/L ICT examinations', 'btn' => 'Meet Our Team', 'action' => 'teachers.php'],
+                3 => ['title' => 'Flexible Online & Physical Classes', 'desc' => 'Choose your learning path with our hybrid model - attend in person or join from anywhere in Sri Lanka', 'btn' => 'Join Online', 'action' => 'javascript:openJoinModal()']
+            ];
+
+            for ($i = 1; $i <= 3; $i++): 
+                $h_title = get_site_setting("hero_slide_{$i}_title", $default_hero[$i]['title']);
+                $h_desc = get_site_setting("hero_slide_{$i}_desc", $default_hero[$i]['desc']);
+                $h_btn = get_site_setting("hero_slide_{$i}_btn_text", $default_hero[$i]['btn']);
+                $h_action = get_site_setting("hero_slide_{$i}_btn_action", $default_hero[$i]['action']);
+                $h_btn_enabled = get_site_setting("hero_slide_{$i}_btn_enabled", "1");
+                
+                $onclick = "";
+                if (strpos($h_action, 'javascript:') === 0) {
+                    $onclick = str_replace('javascript:', '', $h_action);
+                } else {
+                    $onclick = "window.location.href='$h_action'";
+                }
+            ?>
+                <div class="slide slide-<?php echo $i; ?> <?php echo ($i === 1) ? 'active' : ''; ?>">
+                    <div class="slide-content">
+                        <h1 class="slide-title"><?php echo htmlspecialchars($h_title); ?></h1>
+                        <p class="slide-description"><?php echo htmlspecialchars($h_desc); ?></p>
+                        <?php if ($h_btn_enabled == '1'): ?>
+                            <button class="btn btn-primary slide-btn" onclick="<?php echo $onclick; ?>"><?php echo htmlspecialchars($h_btn); ?></button>
+                        <?php endif; ?>
+                    </div>
                 </div>
-            </div>
-            <div class="slide slide-2">
-                <div class="slide-content">
-                    <h1 class="slide-title">Learn from Industry Experts</h1>
-                    <p class="slide-description">Our experienced instructors bring real-world knowledge to help you
-                        excel in O/L ICT examinations</p>
-                    <button class="btn btn-primary slide-btn">Meet Our Team</button>
-                </div>
-            </div>
-            <div class="slide slide-3">
-                <div class="slide-content">
-                    <h1 class="slide-title">Flexible Online & Physical Classes</h1>
-                    <p class="slide-description">Choose your learning path with our hybrid model - attend in person or
-                        join from anywhere in Sri Lanka</p>
-                    <button class="btn btn-primary slide-btn" onclick="openJoinModal()">Join Online</button>
-                </div>
-            </div>
+            <?php endfor; ?>
         </div>
         <div class="slider-dots">
             <span class="dot active" onclick="currentSlide(0)"></span>
