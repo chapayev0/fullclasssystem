@@ -293,7 +293,6 @@ $inst_name = get_site_setting('institute_name', 'ICT with Dilhara');
                 <?php if ($site_logo): ?>
                     <img src="<?php echo htmlspecialchars($site_logo); ?>" alt="Logo" style="height: 50px;">
                 <?php endif; ?>
-                <span><?php echo htmlspecialchars($inst_name); ?></span>
             </a>
         </div>
         

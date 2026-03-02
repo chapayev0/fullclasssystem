@@ -48,7 +48,6 @@
                     <li>📞 <?php echo htmlspecialchars(get_site_setting('site_phone', '0777 695 130')); ?></li>
                     <li>💬 <?php echo htmlspecialchars(get_site_setting('site_phone', '0777 695 130')); ?> (WhatsApp)</li>
                     <li>📧 <a href="mailto:<?php echo htmlspecialchars(get_site_setting('site_email', 'sdilhara544@gmail.com')); ?>"><?php echo htmlspecialchars(get_site_setting('site_email', 'sdilhara544@gmail.com')); ?></a></li>
-                    <li>⏰ Mon-Sat: 8AM - 8PM</li>
                 </ul>
             </div>
         </div>
