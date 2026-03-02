@@ -11,6 +11,7 @@ $success_msg = '';
 $error_msg = '';
 
 // Handle Settings Update
+// Handle Finance Settings Update
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_settings'])) {
     if (isset($_POST['teacher_share_percentage'])) {
         $teacher_share = intval($_POST['teacher_share_percentage']);
@@ -20,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_settings'])) {
             $stmt = $conn->prepare("UPDATE site_settings SET setting_value = ? WHERE setting_key = 'teacher_share_percentage'");
             $stmt->bind_param("s", $teacher_share);
             $stmt->execute();
-            $success_msg = "Settings updated successfully!";
+            $success_msg = "Finance settings updated successfully!";
         }
     }
 }
@@ -65,6 +66,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_general_settin
     }
 
     $success_msg = "General settings updated successfully!";
+}
+
+// Handle About Page Settings Update
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_about_settings'])) {
+    $about_title = $_POST['about_section_title'];
+    $about_subtitle = $_POST['about_section_subtitle'];
+    $about_name = $_POST['about_manager_name'];
+    $about_manager_title = $_POST['about_manager_title'];
+    $about_desc = $_POST['about_description'];
+    $about_points = $_POST['about_points'];
+
+    $about_data = [
+        'about_section_title' => $about_title,
+        'about_section_subtitle' => $about_subtitle,
+        'about_manager_name' => $about_name,
+        'about_manager_title' => $about_manager_title,
+        'about_description' => $about_desc,
+        'about_points' => $about_points
+    ];
+
+    foreach ($about_data as $key => $val) {
+        $stmt = $conn->prepare("UPDATE site_settings SET setting_value = ? WHERE setting_key = ?");
+        $stmt->bind_param("ss", $val, $key);
+        $stmt->execute();
+        
+        // If row doesn't exist, insert it
+        if ($stmt->affected_rows === 0) {
+            $check = $conn->prepare("SELECT setting_key FROM site_settings WHERE setting_key = ?");
+            $check->bind_param("s", $key);
+            $check->execute();
+            if ($check->get_result()->num_rows === 0) {
+                $ins = $conn->prepare("INSERT INTO site_settings (setting_key, setting_value) VALUES (?, ?)");
+                $ins->bind_param("ss", $key, $val);
+                $ins->execute();
+            }
+        }
+    }
+
+    // Handle About Manager Image Upload
+    if (isset($_FILES['about_manager_image']) && $_FILES['about_manager_image']['error'] === UPLOAD_ERR_OK) {
+        $upload_dir = 'uploads/site/';
+        $file_ext = pathinfo($_FILES['about_manager_image']['name'], PATHINFO_EXTENSION);
+        $file_name = 'about_' . time() . '.' . $file_ext;
+        $target_file = $upload_dir . $file_name;
+        
+        if (move_uploaded_file($_FILES['about_manager_image']['tmp_name'], $target_file)) {
+            $stmt = $conn->prepare("UPDATE site_settings SET setting_value = ? WHERE setting_key = 'about_manager_image'");
+            $stmt->bind_param("s", $target_file);
+            $stmt->execute();
+            if ($stmt->affected_rows === 0) {
+                $ins = $conn->prepare("INSERT INTO site_settings (setting_key, setting_value) VALUES ('about_manager_image', ?)");
+                $ins->bind_param("s", $target_file);
+                $ins->execute();
+            }
+        }
+    }
+
+    $success_msg = "About page settings updated successfully!";
 }
 
 // Fetch Current Settings
@@ -166,6 +225,55 @@ $site_address = $settings['site_address'] ?? '';
                 </div>
 
                 <button type="submit" name="update_general_settings" class="btn">Save General Settings</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">About Page Settings</h2>
+            <form method="POST" enctype="multipart/form-data">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Section Title</label>
+                        <input type="text" name="about_section_title" class="form-control" value="<?php echo htmlspecialchars($settings['about_section_title'] ?? 'About Institute'); ?>" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Section Subtitle</label>
+                        <input type="text" name="about_section_subtitle" class="form-control" value="<?php echo htmlspecialchars($settings['about_section_subtitle'] ?? 'Dedicated to empowering the next generation of tech leaders'); ?>" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Manager/Founder Photo</label>
+                    <?php if (isset($settings['about_manager_image'])): ?>
+                        <div style="margin-bottom: 10px;">
+                            <img src="<?php echo htmlspecialchars($settings['about_manager_image']); ?>" alt="Current Photo" class="logo-preview">
+                        </div>
+                    <?php endif; ?>
+                    <input type="file" name="about_manager_image" class="form-control" accept="image/*">
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Manager Name</label>
+                        <input type="text" name="about_manager_name" class="form-control" value="<?php echo htmlspecialchars($settings['about_manager_name'] ?? 'Shashika Dilhara'); ?>" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Manager Title</label>
+                        <input type="text" name="about_manager_title" class="form-control" value="<?php echo htmlspecialchars($settings['about_manager_title'] ?? 'Lead Instructor & Founder'); ?>" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Bio / History Description</label>
+                    <textarea name="about_description" class="form-control" rows="5" required><?php echo htmlspecialchars($settings['about_description'] ?? 'With over 6 years of experience in ICT education, I am passionate about simplifying complex technology concepts for students.'); ?></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Key Points / Qualifications (One per line)</label>
+                    <textarea name="about_points" class="form-control" rows="5" required><?php echo htmlspecialchars($settings['about_points'] ?? "BICT (Hons) in Software System Technology (UOK)\nDiploma in Digital Marketing (SLIM)\nWeb Master at Maxibot\n6+ Years of Experience Software Development"); ?></textarea>
+                </div>
+
+                <button type="submit" name="update_about_settings" class="btn">Save About Settings</button>
             </form>
         </div>
 

@@ -178,30 +178,34 @@
     <!-- About Section -->
     <section class="section">
         <div class="section-header">
-            <h2 class="section-title">Meet Your Instructor</h2>
-            <p style="color:var(--gray);">Dedicated to empowering the next generation of tech leaders</p>
+            <h2 class="section-title"><?php echo htmlspecialchars(get_site_setting('about_section_title', 'About Institute')); ?></h2>
+            <p style="color:var(--gray);"><?php echo htmlspecialchars(get_site_setting('about_section_subtitle', 'Dedicated to empowering the next generation of tech leaders')); ?></p>
         </div>
 
         <div class="about-grid">
             <div class="about-image">
-                <!-- Placeholder for user's photo -->
-                <img src="assest/images/dilhara1.jpg" alt="Dilhara Profile">
+                <!-- Dynamic Image -->
+                <img src="<?php echo htmlspecialchars(get_site_setting('about_manager_image', 'assest/images/dilhara1.jpg')); ?>" alt="About Photo">
             </div>
             <div class="about-info">
-                <h2>Shashika Dilhara</h2>
-                <h4>Lead Instructor & Founder</h4>
+                <h2><?php echo htmlspecialchars(get_site_setting('about_manager_name', 'Shashika Dilhara')); ?></h2>
+                <h4><?php echo htmlspecialchars(get_site_setting('about_manager_title', 'Lead Instructor & Founder')); ?></h4>
                 <p class="bio-text">
-                    With over 6 years of experience in ICT education, I am passionate about simplifying complex technology concepts for students. 
-                    My mission is to provide high-quality, practical, and exam-focused ICT education to help students achieve excellence.
+                    <?php echo nl2br(htmlspecialchars(get_site_setting('about_description', 'With over 6 years of experience in ICT education, I am passionate about simplifying complex technology concepts for students. My mission is to provide high-quality, practical, and exam-focused ICT education to help students achieve excellence.'))); ?>
                 </p>
                 
-                <h5 style="font-size:1.1rem; margin-bottom:1rem; color:var(--dark);">Qualifications & Achievements</h5>
+                <h5 style="font-size:1.1rem; margin-bottom:1rem; color:var(--dark);">Key Details & Achievements</h5>
                 <ul class="qualifications-list">
-                    <li>BICT (Hons) in Software System Technology (UOK)</li>
-                    <li>Diploma in Digital Marketing (SLIM)</li>
-                    <li>Web Master at Maxibot</li>
-                    <li>6+ Years of Experience Software Development</li>
-                    
+                    <?php 
+                    $points_text = get_site_setting('about_points', "BICT (Hons) in Software System Technology (UOK)\nDiploma in Digital Marketing (SLIM)\nWeb Master at Maxibot\n6+ Years of Experience Software Development");
+                    $points = explode("\n", str_replace("\r", "", $points_text));
+                    foreach ($points as $point) {
+                        $point = trim($point);
+                        if (!empty($point)) {
+                            echo "<li>" . htmlspecialchars($point) . "</li>";
+                        }
+                    }
+                    ?>
                 </ul>
             </div>
         </div>
