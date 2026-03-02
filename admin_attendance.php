@@ -164,7 +164,7 @@ if ($active_tab === 'mark' && $selected_class) {
             --border: #E2E8F0;
         }
         body { font-family: 'Outfit', sans-serif; background: var(--light); margin: 0; display: flex; }
-        .main-content { flex: 1; padding: 3rem; margin-left: 250px; }
+        .main-content { flex: 1; padding: 3rem; margin-left: 290px; }
         .header { margin-bottom: 2rem; }
         
         /* Tabs */

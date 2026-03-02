@@ -57,7 +57,9 @@ function isRecActive($page) {
 </script>
 
 <style>
-    /* Reuse Admin Sidebar Styles */
+    /* Global Reset for Sidebar Context */
+    * { box-sizing: border-box; }
+
     .sidebar { width: 250px; background: #0F172A; color: white; min-height: 100vh; padding: 2rem; position: fixed; left: 0; top: 0; z-index: 1000; transition: transform 0.3s ease; }
     .nav-link { display: block; color: rgba(255,255,255,0.7); text-decoration: none; padding: 1rem 0; transition: color 0.3s; }
     .nav-link:hover, .nav-link.active { color: white; font-weight: 600; }

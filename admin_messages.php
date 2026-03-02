@@ -104,7 +104,7 @@ $all_teachers = $conn->query("SELECT u.id, t.name FROM users u JOIN teachers t O
     <style>
         :root { --primary: #0066FF; --dark: #0F172A; --light: #F8FAFC; --gray: #64748B; --border: #E2E8F0; }
         body { font-family: 'Outfit', sans-serif; background: var(--light); margin: 0; display: flex; }
-        .main-content { flex: 1; padding: 3rem; margin-left: 250px; }
+        .main-content { flex: 1; padding: 3rem; margin-left: 290px; }
         @media (max-width: 768px) { .main-content { margin-left: 0; padding: 1.5rem; padding-top: 5rem; } }
         
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
