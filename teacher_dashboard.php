@@ -101,7 +101,7 @@ $teacher_monthly_income = ($gross_monthly * $teacher_share_pct) / 100;
         .main-content {
             flex: 1;
             padding: 3rem;
-            margin-left: 250px;
+            margin-left: 290px;
             transition: margin-left 0.3s ease;
         }
 

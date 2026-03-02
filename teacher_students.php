@@ -38,7 +38,7 @@ if ($result) {
             --success: #10B981;
         }
         body { font-family: 'Outfit', sans-serif; background: var(--light); margin: 0; display: flex; }
-        .main-content { flex: 1; padding: 3rem; margin-left: 250px; }
+        .main-content { flex: 1; padding: 3rem; margin-left: 290px; }
         .header { margin-bottom: 2rem; }
         .card { background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
         

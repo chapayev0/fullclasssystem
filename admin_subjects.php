@@ -120,7 +120,7 @@ if ($t_result) {
         .main-content {
             flex: 1;
             padding: 3rem;
-            margin-left: 250px; /* sidebar width */
+            margin-left: 290px; /* sidebar width */
         }
         .header {
             margin-bottom: 2rem;

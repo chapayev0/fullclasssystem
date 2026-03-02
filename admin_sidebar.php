@@ -128,7 +128,8 @@ function isActive($page) {
         width: 250px;
         background: #0F172A;
         color: white;
-        min-height: 100vh;
+        height: 100vh;
+        overflow-y: auto;
         padding: 2rem;
         position: fixed;
         left: 0;

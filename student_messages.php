@@ -74,7 +74,7 @@ if (isset($admin_id)) {
         .main-content {
             flex: 1;
             padding: 3rem;
-            margin-left: 250px; /* Sidebar width */
+            margin-left: 290px;
             height: 100vh;
             display: flex;
             flex-direction: column;

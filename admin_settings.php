@@ -54,7 +54,7 @@ $institute_share = 100 - $teacher_share;
             --danger: #EF4444;
         }
         body { font-family: 'Outfit', sans-serif; background: var(--light); margin: 0; display: flex; }
-        .main-content { flex: 1; padding: 3rem; margin-left: 250px; }
+        .main-content { flex: 1; padding: 3rem; margin-left: 290px; }
         .card { background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); max-width: 600px; }
         .header { margin-bottom: 2rem; }
         .form-group { margin-bottom: 1.5rem; }

@@ -97,11 +97,7 @@ if ($result) {
     <style>
         :root { --primary: #0066FF; --secondary: #7C3AED; --dark: #0F172A; --light: #F8FAFC; --gray: #64748B; --danger: #EF4444; --success: #10B981; }
         body { font-family: 'Outfit', sans-serif; background: var(--light); margin: 0; display: flex; }
-        /* Sidebar Styles - Required as admin_sidebar.php doesn't include them */
-        .sidebar { width: 250px; background: var(--dark); color: white; min-height: 100vh; padding: 2rem; position: fixed; left: 0; top: 0; }
-        .logo { font-size: 1.5rem; font-weight: 800; margin-bottom: 3rem; color: var(--primary); }
-        .nav-link { display: block; color: rgba(255,255,255,0.7); text-decoration: none; padding: 1rem 0; transition: color 0.3s; }
-        .nav-link:hover, .nav-link.active { color: white; font-weight: 600; }
+        /* Sidebar Styles handled by admin_sidebar.php */
 
         /* Fixed margin to 290px to match other pages */
         .main-content { flex: 1; padding: 3rem; margin-left: 290px; }

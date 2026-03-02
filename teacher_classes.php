@@ -37,7 +37,7 @@ while ($row = $res_cls->fetch_assoc()) {
     <style>
         :root { --primary: #0066FF; --dark: #0F172A; --light: #F8FAFC; --gray: #64748B; }
         body { font-family: 'Outfit', sans-serif; background: var(--light); margin: 0; display: flex; }
-        .main-content { flex: 1; padding: 3rem; margin-left: 250px; }
+        .main-content { flex: 1; padding: 3rem; margin-left: 290px; }
         .class-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
         .card { background: white; padding: 1.5rem; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
         h1 { margin-bottom: 2rem; }

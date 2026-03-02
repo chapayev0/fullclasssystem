@@ -75,7 +75,7 @@ $stmt->close();
     <style>
         :root { --primary: #0066FF; --dark: #0F172A; --light: #F8FAFC; --gray: #64748B; }
         body { font-family: 'Outfit', sans-serif; background: var(--light); margin: 0; display: flex; }
-        .main-content { flex: 1; padding: 3rem; margin-left: 250px; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+        .main-content { flex: 1; padding: 3rem; margin-left: 290px; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         @media (max-width: 768px) { .main-content { margin-left: 0; padding: 1.5rem; padding-top: 5rem; } }
 
         .chat-container { flex: 1; background: white; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); display: flex; flex-direction: column; overflow: hidden; border: 1px solid #e2e8f0; }

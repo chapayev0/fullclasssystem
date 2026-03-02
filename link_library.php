@@ -61,34 +61,7 @@ if ($result->num_rows > 0) {
             display: flex;
         }
         /* Sidebar styles handled by include, but we need layout styles */
-        .sidebar {
-            width: 250px;
-            background: var(--dark);
-            color: white;
-            min-height: 100vh;
-            padding: 2rem;
-            position: fixed;
-            left: 0;
-            top: 0;
-        }
-        /* ... existing sidebar styles ... */
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin-bottom: 3rem;
-            color: var(--primary);
-        }
-        .nav-link {
-            display: block;
-            color: rgba(255,255,255,0.7);
-            text-decoration: none;
-            padding: 1rem 0;
-            transition: color 0.3s;
-        }
-        .nav-link:hover, .nav-link.active {
-            color: white;
-            font-weight: 600;
-        }
+        /* Sidebar styles handled by include */
         .main-content {
             flex: 1;
             padding: 3rem;

@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_subject'])) {
         .main-content {
             flex: 1;
             padding: 3rem;
-            margin-left: 250px;
+            margin-left: 290px;
         }
         .header {
             display: flex;

@@ -44,7 +44,7 @@ if ($result->num_rows > 0) {
         .main-content {
             flex: 1;
             padding: 3rem;
-            margin-left: 250px; /* Matched sidebar width */
+            margin-left: 290px;
             transition: margin-left 0.3s ease;
         }
 

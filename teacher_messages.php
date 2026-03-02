@@ -59,7 +59,7 @@ if (isset($admin_id)) {
     <style>
         :root { --primary: #0066FF; --dark: #0F172A; --light: #F8FAFC; --gray: #64748B; }
         body { font-family: 'Outfit', sans-serif; background: var(--light); margin: 0; display: flex; }
-        .main-content { flex: 1; padding: 3rem; margin-left: 250px; height: 100vh; display: flex; flex-direction: column; }
+        .main-content { flex: 1; padding: 3rem; margin-left: 290px; height: 100vh; display: flex; flex-direction: column; }
         .chat-container { flex: 1; background: white; border-radius: 15px; display: flex; flex-direction: column; overflow: hidden; border: 1px solid #e2e8f0; }
         .chat-header { padding: 1.5rem; border-bottom: 1px solid #e2e8f0; }
         .messages-area { flex: 1; padding: 2rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem; }
