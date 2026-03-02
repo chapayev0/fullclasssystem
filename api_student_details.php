@@ -4,8 +4,8 @@ include 'db_connect.php';
 
 header('Content-Type: application/json');
 
-// Check if admin
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+// Check if admin or teacher
+if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'], ['admin', 'teacher'])) {
     echo json_encode(['error' => 'Unauthorized']);
     exit();
 }
