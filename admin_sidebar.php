@@ -24,6 +24,7 @@ function isActive($page) {
         <a href="admin_classes.php" class="nav-link <?php echo isActive('admin_classes.php'); echo isActive('admin_edit_class.php'); ?>">Classes</a>
         <a href="admin_subjects.php" class="nav-link <?php echo isActive('admin_subjects.php'); echo isActive('admin_edit_subject.php'); ?>">Subjects</a>
         <a href="admin_teachers.php" class="nav-link <?php echo isActive('admin_teachers.php'); echo isActive('admin_edit_teacher.php'); ?>">Teachers</a>
+        <a href="admin_receptionists.php" class="nav-link <?php echo isActive('admin_receptionists.php'); ?>">Manage Reception</a>
         <a href="admin_finance.php" class="nav-link <?php echo isActive('admin_finance.php'); ?>">Finance</a>
         <a href="admin_settings.php" class="nav-link <?php echo isActive('admin_settings.php'); ?>">Settings</a>
         <a href="admin_messages.php" class="nav-link <?php echo isActive('admin_messages.php'); ?>">Messages</a>

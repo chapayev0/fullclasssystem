@@ -3,8 +3,8 @@ session_start();
 include 'db_connect.php';
 include 'helpers.php';
 
-// Check if admin
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+// Check if admin or reception
+if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'], ['admin', 'reception'])) {
     header("Location: login.php");
     exit();
 }
@@ -235,7 +235,13 @@ if ($result) {
     <script src="https://unpkg.com/html5-qrcode"></script>
 </head>
 <body>
-    <?php include 'admin_sidebar.php'; ?>
+    <?php 
+    if ($_SESSION['role'] === 'admin') {
+        include 'admin_sidebar.php'; 
+    } else {
+        include 'reception_sidebar.php';
+    }
+    ?>
     
     <div class="main-content">
         <div class="header">
@@ -308,14 +314,16 @@ if ($result) {
                                         <td>
                                             <div style="display:flex; align-items: center; gap: 5px; flex-wrap: wrap;">
                                                 <button type="button" class="btn" style="background: var(--primary); padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="viewStudentFullDetails(<?php echo $stu['id']; ?>)">View</button>
-                                                <a href="admin_edit_student.php?id=<?php echo $stu['id']; ?>" class="btn btn-edit" style="margin: 0; padding: 0.5rem 1rem; font-size: 0.85rem;">Edit</a>
                                                 <button type="button" class="btn btn-view-id" style="margin: 0;" onclick="showIDCard('<?php echo htmlspecialchars(addslashes($stu['first_name'] . ' ' . $stu['last_name'])); ?>', '<?php echo $stu['username']; ?>', '<?php echo $stu['phone']; ?>', '<?php echo format_grade($stu['grade']); ?>')">ID</button>
                                                 <button type="button" class="btn" style="margin: 0; background: var(--secondary); padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="downloadStudentPDF('<?php echo htmlspecialchars(addslashes($stu['first_name'] . ' ' . $stu['last_name'])); ?>', '<?php echo $stu['username']; ?>', '<?php echo $stu['phone']; ?>', '<?php echo format_grade($stu['grade']); ?>')">Print ID</button>
+                                                <?php if ($_SESSION['role'] === 'admin'): ?>
+                                                <a href="admin_edit_student.php?id=<?php echo $stu['id']; ?>" class="btn btn-edit" style="margin: 0; padding: 0.5rem 1rem; font-size: 0.85rem;">Edit</a>
                                                 <form method="POST" onsubmit="return confirm('Deleting this student will ALSO delete their user account. Confirm?');" style="margin: 0;">
                                                     <input type="hidden" name="student_id" value="<?php echo $stu['id']; ?>">
                                                     <input type="hidden" name="user_id" value="<?php echo $stu['u_id']; ?>">
                                                     <button type="submit" name="delete_student" class="btn btn-danger" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Delete</button>
                                                 </form>
+                                                <?php endif; ?>
                                             </div>
                                         </td>
                                     </tr>

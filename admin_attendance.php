@@ -3,8 +3,8 @@ session_start();
 include 'db_connect.php';
 include 'helpers.php';
 
-// Check if admin
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+// Check if admin or reception
+if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'], ['admin', 'reception'])) {
     header("Location: login.php");
     exit();
 }
@@ -262,7 +262,13 @@ if ($active_tab === 'mark' && $selected_class) {
     </style>
 </head>
 <body>
-    <?php include 'admin_sidebar.php'; ?>
+    <?php 
+    if ($_SESSION['role'] === 'admin') {
+        include 'admin_sidebar.php'; 
+    } else {
+        include 'reception_sidebar.php';
+    }
+    ?>
     
     <div class="main-content">
         <div class="header">

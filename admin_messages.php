@@ -2,7 +2,7 @@
 session_start();
 include 'db_connect.php';
 
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'], ['admin', 'reception'])) {
     header("Location: login.php");
     exit();
 }
@@ -167,7 +167,13 @@ $all_teachers = $conn->query("SELECT u.id, t.name FROM users u JOIN teachers t O
     </style>
 </head>
 <body>
-    <?php include 'admin_sidebar.php'; ?>
+    <?php 
+    if ($_SESSION['role'] === 'admin') {
+        include 'admin_sidebar.php'; 
+    } else {
+        include 'reception_sidebar.php';
+    }
+    ?>
     
     <div class="main-content">
         <?php if (isset($success_alert)): ?>

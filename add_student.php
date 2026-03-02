@@ -3,7 +3,7 @@ session_start();
 include 'db_connect.php';
 include 'helpers.php';
 
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'], ['admin', 'reception'])) {
     header("Location: login.php");
     exit();
 }

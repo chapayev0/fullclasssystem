@@ -2,8 +2,8 @@
 session_start();
 include 'db_connect.php';
 
-// Check if admin
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+// Check if admin or reception
+if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'], ['admin', 'reception'])) {
     header("Location: login.php");
     exit();
 }
@@ -232,7 +232,13 @@ if ($result) {
     <script src="https://unpkg.com/html5-qrcode"></script>
 </head>
 <body>
-    <?php include 'admin_sidebar.php'; ?>
+    <?php 
+    if ($_SESSION['role'] === 'admin') {
+        include 'admin_sidebar.php'; 
+    } else {
+        include 'reception_sidebar.php';
+    }
+    ?>
     
     <div class="main-content">
         <div class="header">
@@ -248,7 +254,9 @@ if ($result) {
         
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('view')">View Teachers</button>
+            <?php if ($_SESSION['role'] === 'admin'): ?>
             <button class="tab-btn" onclick="switchTab('add')">Add Teacher</button>
+            <?php endif; ?>
         </div>
         
         <!-- View Tab -->
@@ -297,13 +305,15 @@ if ($result) {
                                     <td>
                                         <div style="display:flex; flex-wrap: wrap; gap: 5px; align-items: center;">
                                             <button type="button" class="btn" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="viewTeacherFullDetails(<?php echo $t['id']; ?>)">View</button>
-                                            <a href="admin_edit_teacher.php?id=<?php echo $t['id']; ?>" class="btn btn-edit" style="margin: 0; padding: 0.5rem 1rem; font-size: 0.85rem;">Edit</a>
                                             <button type="button" class="btn" style="background: var(--dark); padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="showTeacherID('<?php echo htmlspecialchars(addslashes($t['name'])); ?>', '<?php echo $t['id']; ?>', '<?php echo htmlspecialchars($t['image']); ?>', '<?php echo htmlspecialchars($t['phone']); ?>', '<?php echo htmlspecialchars(addslashes($t['qualifications'])); ?>')">ID</button>
                                             <button type="button" class="btn" style="background: var(--secondary); padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="downloadTeacherPDF('<?php echo htmlspecialchars(addslashes($t['name'])); ?>', '<?php echo $t['id']; ?>', '<?php echo htmlspecialchars($t['image']); ?>', '<?php echo htmlspecialchars($t['phone']); ?>', '<?php echo htmlspecialchars(addslashes($t['qualifications'])); ?>')">Print</button>
+                                            <?php if ($_SESSION['role'] === 'admin'): ?>
+                                            <a href="admin_edit_teacher.php?id=<?php echo $t['id']; ?>" class="btn btn-edit" style="margin: 0; padding: 0.5rem 1rem; font-size: 0.85rem;">Edit</a>
                                             <form method="POST" onsubmit="return confirm('Confirm deletion?');" style="margin: 0;">
                                                 <input type="hidden" name="teacher_id" value="<?php echo $t['id']; ?>">
                                                 <button type="submit" name="delete_teacher" class="btn btn-danger" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Delete</button>
                                             </form>
+                                            <?php endif; ?>
                                         </div>
                                     </td>
                                 </tr>

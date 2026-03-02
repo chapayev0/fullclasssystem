@@ -3,8 +3,8 @@ session_start();
 include 'db_connect.php';
 include 'helpers.php';
 
-// Check if admin
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+// Check if admin or reception
+if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'], ['admin', 'reception'])) {
     header("Location: login.php");
     exit();
 }
@@ -266,7 +266,13 @@ if ($s_result) {
     </style>
 </head>
 <body>
-    <?php include 'admin_sidebar.php'; ?>
+    <?php 
+    if ($_SESSION['role'] === 'admin') {
+        include 'admin_sidebar.php'; 
+    } else {
+        include 'reception_sidebar.php';
+    }
+    ?>
     
     <div class="main-content">
         <div class="header">
@@ -283,7 +289,9 @@ if ($s_result) {
         
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('view')">View Classes</button>
+            <?php if ($_SESSION['role'] === 'admin'): ?>
             <button class="tab-btn" onclick="switchTab('add')">Add New Class</button>
+            <?php endif; ?>
         </div>
         
         <!-- View Classes Tab -->
@@ -329,11 +337,15 @@ if ($s_result) {
                                         <td><?php echo htmlspecialchars($class['institute_phone']); ?></td>
                                         <td>
                                             <div style="display: flex;">
+                                                <?php if ($_SESSION['role'] === 'admin'): ?>
                                                 <a href="admin_edit_class.php?id=<?php echo $class['id']; ?>" class="btn btn-edit">Edit</a>
                                                 <form method="POST" onsubmit="return confirm('Are you sure you want to delete this class?');">
                                                     <input type="hidden" name="class_id" value="<?php echo $class['id']; ?>">
                                                     <button type="submit" name="delete_class" class="btn btn-danger">Delete</button>
                                                 </form>
+                                                <?php else: ?>
+                                                <span style="color: var(--gray); font-style: italic;">Read Only</span>
+                                                <?php endif; ?>
                                             </div>
                                         </td>
                                     </tr>

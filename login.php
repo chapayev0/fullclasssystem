@@ -33,6 +33,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 header("Location: admin_dashboard.php");
             } elseif ($row['role'] == 'teacher') {
                 header("Location: teacher_dashboard.php");
+            } elseif ($row['role'] == 'reception') {
+                header("Location: reception_dashboard.php");
             } else {
                 header("Location: student_dashboard.php");
             }
