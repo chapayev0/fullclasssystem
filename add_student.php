@@ -1,7 +1,7 @@
 <?php
 session_start();
 include 'db_connect.php';
-include 'helpers.php';
+include_once 'helpers.php';
 
 if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'], ['admin', 'reception'])) {
     header("Location: login.php");

@@ -1,6 +1,6 @@
 <?php 
 include 'db_connect.php'; 
-include 'helpers.php';
+include_once 'helpers.php';
 
 // Validate and clean the grade input
 $grade = isset($_GET['grade']) ? intval($_GET['grade']) : 0;

@@ -1,6 +1,6 @@
 <?php
 include 'db_connect.php';
-include 'helpers.php';
+include_once 'helpers.php';
 
 $subject_filter = isset($_GET['subject']) ? $_GET['subject'] : '';
 

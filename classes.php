@@ -1,6 +1,6 @@
 <?php
 include 'db_connect.php';
-include 'helpers.php';
+include_once 'helpers.php';
 
 // Get filter values
 $search = isset($_GET['search']) ? $conn->real_escape_string($_GET['search']) : '';

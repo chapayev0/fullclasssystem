@@ -1,7 +1,7 @@
 <?php
 session_start();
 include 'db_connect.php';
-include 'helpers.php';
+include_once 'helpers.php';
 
 header('Content-Type: application/json');
 

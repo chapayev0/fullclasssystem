@@ -1,7 +1,7 @@
 <?php
 session_start();
 include 'db_connect.php';
-include 'helpers.php';
+include_once 'helpers.php';
 
 // Check if teacher
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'teacher') {
