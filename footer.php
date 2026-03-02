@@ -31,14 +31,14 @@
             <div class="footer-section">
                 <h4>Classes</h4>
                 <ul class="footer-links">
-                    <li><a href="class_details.php?grade=6">Grade 6 ICT</a></li>
-                    <li><a href="class_details.php?grade=7">Grade 7 ICT</a></li>
-                    <li><a href="class_details.php?grade=8">Grade 8 ICT</a></li>
-                    <li><a href="class_details.php?grade=9">Grade 9 ICT</a></li>
-                    <li><a href="class_details.php?grade=10">Grade 10 ICT (O/L)</a></li>
-                    <li><a href="class_details.php?grade=11">Grade 11 ICT (O/L)</a></li>
-                    <li><a href="class_details.php?grade=12">Grade 12 ICT (A/L)</a></li>
-                    <li><a href="class_details.php?grade=13">Grade 13 ICT (A/L)</a></li>
+                    <li><a href="class_details.php?grade=6">Grade 6 Classes</a></li>
+                    <li><a href="class_details.php?grade=7">Grade 7 Classes</a></li>
+                    <li><a href="class_details.php?grade=8">Grade 8 Classes</a></li>
+                    <li><a href="class_details.php?grade=9">Grade 9 Classes</a></li>
+                    <li><a href="class_details.php?grade=10">Grade 10 Classes</a></li>
+                    <li><a href="class_details.php?grade=11">Grade 11 Classes</a></li>
+                    <li><a href="class_details.php?grade=12">Grade 12 Classes</a></li>
+                    <li><a href="class_details.php?grade=13">Grade 13 Classes</a></li>
                 </ul>
             </div>
             <div class="footer-section">

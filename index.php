@@ -904,13 +904,7 @@
             }
 
 
-            .dilhara-text .small-text {
-                font-size: 14vw;
-            }
 
-            .dilhara-text .large-text {
-                font-size: 30vw;
-            }
 
             .hero-section {
                 height: auto;
