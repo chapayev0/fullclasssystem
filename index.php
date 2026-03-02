@@ -744,21 +744,25 @@
             line-height: 1;
             position: relative;
             z-index: 2;
+            max-width: 90vw;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .dilhara-text .small-text {
-            font-size: 12vw;
+            font-size: clamp(2rem, 10vw, 8rem);
             font-weight: 500;
             letter-spacing: -0.02em;
-            margin-bottom: -20px;
+            margin-bottom: clamp(-5px, -1.5vw, -30px);
             color: var(--gray);
         }
 
         .dilhara-text .large-text {
-            font-size: 28vw;
+            font-size: clamp(3rem, 22vw, 18rem);
             font-weight: 600;
             letter-spacing: -0.03em;
             color: var(--primary);
+            text-transform: uppercase;
         }
 
         /* Floating particles effect */
