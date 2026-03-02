@@ -14,7 +14,6 @@ function isRecActive($page) {
 <div class="sidebar" id="sidebar">
     <div class="sidebar-header">
         <div class="logo">Reception</div>
-        <button class="close-sidebar" onclick="toggleSidebar()">×</button>
     </div>
     <nav>
         <a href="reception_dashboard.php" class="nav-link <?php echo isRecActive('reception_dashboard.php'); ?>">Dashboard</a>
